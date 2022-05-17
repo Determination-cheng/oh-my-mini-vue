@@ -1,3 +1,2 @@
-export function add(a: number, b: number) {
-  return a + b
-}
+export { reactive } from './reactive'
+export { effect } from './effect'
