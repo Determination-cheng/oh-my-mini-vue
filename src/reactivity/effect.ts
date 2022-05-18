@@ -16,7 +16,10 @@ export function effect(fn: () => void) {
 }
 
 //* 依赖收集
-const targetMap = new Map()
+const targetMap = new Map<
+  Record<string, unknown>,
+  Map<string | symbol, Set<ReactiveEffect>>
+>()
 export function track(target: Record<string, unknown>, key: string | symbol) {
   // target -> key -> dep
   let depsMap = targetMap.get(target)
@@ -36,10 +39,6 @@ export function track(target: Record<string, unknown>, key: string | symbol) {
 
 //* 触发依赖
 export function trigger(target: Record<string, unknown>, key: string | symbol) {
-  let depsMap = targetMap.get(target)
-  let dep = depsMap.get(key)
-
-  for (const effect of dep) {
-    effect.run()
-  }
+  const dep = targetMap.get(target)!.get(key)!
+  dep.forEach(e => e.run())
 }
