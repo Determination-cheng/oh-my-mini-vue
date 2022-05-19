@@ -1,7 +1,7 @@
 let activeEffect: ReactiveEffect
 
 class ReactiveEffect {
-  constructor(private fn: () => void) {}
+  constructor(private fn: () => void, public scheduler?: () => any) {}
 
   run() {
     activeEffect = this
@@ -9,8 +9,8 @@ class ReactiveEffect {
   }
 }
 
-export function effect(fn: () => void) {
-  const _effect = new ReactiveEffect(fn)
+export function effect(fn: () => void, options?: { scheduler: () => any }) {
+  const _effect = new ReactiveEffect(fn, options?.scheduler)
 
   _effect.run()
   return _effect.run.bind(_effect)
@@ -41,5 +41,11 @@ export function track(target: Record<string, unknown>, key: string | symbol) {
 //* 触发依赖
 export function trigger(target: Record<string, unknown>, key: string | symbol) {
   const dep = targetMap.get(target)!.get(key)!
-  dep.forEach(e => e.run())
+  dep.forEach(e => {
+    if (e.scheduler) {
+      e.scheduler()
+    } else {
+      e.run()
+    }
+  })
 }
