@@ -8,7 +8,11 @@ type Runner = {
 class ReactiveEffect {
   private isActive = true
   public deps: Set<Set<ReactiveEffect>> = new Set()
-  constructor(private fn: () => void, public scheduler?: () => any) {}
+  constructor(
+    private fn: () => void,
+    public scheduler?: () => void,
+    public onStop?: () => void,
+  ) {}
 
   run() {
     activeEffect = this
@@ -21,12 +25,17 @@ class ReactiveEffect {
         dep.delete(this)
       })
       this.isActive = false
+      if (this.onStop) this.onStop()
     }
   }
 }
 
-export function effect(fn: () => void, options?: { scheduler: () => void }) {
-  const _effect = new ReactiveEffect(fn, options?.scheduler)
+type EffectOptions = {
+  scheduler?: () => void
+  onStop?: () => void
+}
+export function effect(fn: () => void, options?: EffectOptions) {
+  const _effect = new ReactiveEffect(fn, options?.scheduler, options?.onStop)
   _effect.run()
 
   const runner = (_effect.run as Runner).bind(_effect)
