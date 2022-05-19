@@ -1,26 +1,46 @@
 let activeEffect: ReactiveEffect
 
+type Runner = {
+  effect: ReactiveEffect
+  (): void
+}
+
 class ReactiveEffect {
+  private isActive = true
+  public deps: Set<Set<ReactiveEffect>> = new Set()
   constructor(private fn: () => void, public scheduler?: () => any) {}
 
   run() {
     activeEffect = this
     return this.fn()
   }
+
+  stop() {
+    if (this.isActive) {
+      this.deps.forEach(dep => {
+        dep.delete(this)
+      })
+      this.isActive = false
+    }
+  }
 }
 
-export function effect(fn: () => void, options?: { scheduler: () => any }) {
+export function effect(fn: () => void, options?: { scheduler: () => void }) {
   const _effect = new ReactiveEffect(fn, options?.scheduler)
-
   _effect.run()
-  return _effect.run.bind(_effect)
+
+  const runner = (_effect.run as Runner).bind(_effect)
+  runner.effect = _effect
+  return runner
 }
 
 //* 依赖收集
-const targetMap = new Map<
+type TargetMap = Map<
   Record<string, unknown>,
   Map<string | symbol, Set<ReactiveEffect>>
->()
+>
+const targetMap: TargetMap = new Map()
+
 export function track(target: Record<string, unknown>, key: string | symbol) {
   // target -> key -> dep
   let depsMap = targetMap.get(target)
@@ -35,7 +55,12 @@ export function track(target: Record<string, unknown>, key: string | symbol) {
     depsMap.set(key, dep)
   }
 
+  // 从对象的角度出发，收集相关的 effect
   dep.add(activeEffect)
+
+  // 如果只是单纯的 reactive 并没有 effect，此时 activeEffect 是 undefined
+  // 因此这里需要做一下判断
+  activeEffect?.deps.add(dep)
 }
 
 //* 触发依赖
@@ -48,4 +73,9 @@ export function trigger(target: Record<string, unknown>, key: string | symbol) {
       e.run()
     }
   })
+}
+
+//* 停止跟踪依赖
+export function stop(runner: () => void) {
+  ;(runner as Runner).effect.stop()
 }

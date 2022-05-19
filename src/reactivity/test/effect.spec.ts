@@ -1,5 +1,5 @@
 import { reactive } from '../reactive'
-import { effect } from '../effect'
+import { effect, stop } from '../effect'
 
 describe('effect', () => {
   it('happy path', () => {
@@ -59,5 +59,26 @@ describe('effect', () => {
     // 手动执行 effect 返回值时才会调用 effect 的第一个参数方法
     run()
     expect(dummy).toBe(2)
+  })
+
+  it('stop', () => {
+    let dummy = -1
+    const obj = reactive({ prop: 1 })
+    const runner = effect(() => {
+      dummy = obj.prop
+    })
+
+    // 在 stop 之前正常更新
+    obj.prop = 2
+    expect(dummy).toBe(2)
+
+    // 执行 stop 之后，删除依赖
+    stop(runner)
+    obj.prop = 3
+    expect(dummy).toBe(2)
+
+    // 手动运行 runner 时依旧可以触发更新
+    runner()
+    expect(dummy).toBe(3)
   })
 })
