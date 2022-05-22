@@ -6,8 +6,8 @@ export const enum ReactiveFlags {
 }
 
 //* reactive
-export function reactive<T extends Record<string, unknown>>(target: T) {
-  return new Proxy(target, reactiveHandler)
+export function reactive<T extends Record<string, any>>(target: T) {
+  return new Proxy(target, reactiveHandler) as T
 }
 
 export function isReactive(target: Record<string, unknown>) {
@@ -18,7 +18,7 @@ export function isReactive(target: Record<string, unknown>) {
 
 //* readonly
 export function readonly<T extends Record<string, unknown>>(target: T) {
-  return new Proxy(target, readonlyHandler)
+  return new Proxy(target, readonlyHandler) as T
 }
 
 export function isReadonly(target: Record<string, unknown>) {

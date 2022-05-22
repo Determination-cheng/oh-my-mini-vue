@@ -45,12 +45,15 @@ export function effect(fn: () => void, options?: EffectOptions) {
 
 //* 依赖收集
 type TargetMap = Map<
-  Record<string, unknown>,
+  Record<string, any>,
   Map<string | symbol, Set<ReactiveEffect>>
 >
 const targetMap: TargetMap = new Map()
 
-export function track(target: Record<string, unknown>, key: string | symbol) {
+export function track<T extends Record<string, any>>(
+  target: T,
+  key: string | symbol,
+) {
   // target -> key -> dep
   let depsMap = targetMap.get(target)
   if (!depsMap) {
