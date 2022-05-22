@@ -1,4 +1,5 @@
 let activeEffect: ReactiveEffect
+let shouldTrack = false
 
 type Runner = {
   effect: ReactiveEffect
@@ -15,8 +16,16 @@ class ReactiveEffect {
   ) {}
 
   run() {
+    // 如果被停止之后调用，仅仅执行传入方法
+    if (!this.isActive) return this.fn()
+
+    // 正常收集依赖
+    shouldTrack = true
     activeEffect = this
-    return this.fn()
+    const ret = this.fn()
+    shouldTrack = false
+
+    return ret
   }
 
   stop() {
@@ -54,6 +63,10 @@ export function track<T extends Record<string, any>>(
   target: T,
   key: string | symbol,
 ) {
+  //! runner 在被停止之后再访问对象时不应该再被收集依赖，考虑如下场景
+  //! obj.prop++ <=> obj.prop = obj.prop + 1
+  if (!shouldTrack) return
+
   // target -> key -> dep
   let depsMap = targetMap.get(target)
   if (!depsMap) {

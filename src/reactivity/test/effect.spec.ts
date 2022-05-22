@@ -77,9 +77,14 @@ describe('effect', () => {
     obj.prop = 3
     expect(dummy).toBe(2)
 
+    // 执行自增或自减会触发 GET，此时依旧不能自动触发更新
+    // obj.prop++ => obj.prop = obj.prop + 1
+    obj.prop++
+    expect(dummy).toBe(2)
+
     // 手动运行 runner 时依旧可以触发更新
     runner()
-    expect(dummy).toBe(3)
+    expect(dummy).toBe(4)
   })
 
   it('onStop', () => {
