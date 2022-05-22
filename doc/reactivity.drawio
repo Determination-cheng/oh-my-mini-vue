@@ -1,0 +1,486 @@
+<mxfile host="65bd71144e">
+    <diagram id="R4spEyw9eaZhUga1ujNU" name="Page-1">
+        <mxGraphModel dx="2276" dy="1254" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;font style=&quot;font-size: 22px&quot;&gt;reactive&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="300" y="150" width="170" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="1" source="3" target="91">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;font style=&quot;font-size: 22px&quot;&gt;effect&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="1200" width="170" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="obj" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="325" y="30" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="shape=flexArrow;endArrow=classic;html=1;fontSize=22;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="4" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="360" y="400" as="sourcePoint"/>
+                        <mxPoint x="410" y="350" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;" edge="1" parent="1" source="6" target="8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=22;" edge="1" parent="1" source="6" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="proxy obj" style="rounded=1;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="325" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="shape=flexArrow;endArrow=classic;html=1;fontSize=22;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="6">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="395" y="90" as="sourcePoint"/>
+                        <mxPoint x="395" y="160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="8" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;font style=&quot;font-size: 22px&quot;&gt;get&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="195" y="420" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="10" target="31">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&lt;font style=&quot;font-size: 22px&quot;&gt;set&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="430" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="14" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="14" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=19;" vertex="1" connectable="0" parent="19">
+                    <mxGeometry x="0.0745" y="1" relative="1" as="geometry">
+                        <mxPoint x="-7" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="&lt;font style=&quot;font-size: 19px&quot;&gt;访问字段是否为&lt;br&gt;判断 reactive 和 readonly&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="75" y="527" width="370" height="115" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="返回布尔值" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="690" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="18" target="21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="获取访问值" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;" vertex="1" parent="1">
+                    <mxGeometry x="290" y="690" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="21" target="24">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=19;" vertex="1" connectable="0" parent="25">
+                    <mxGeometry x="0.124" y="3" relative="1" as="geometry">
+                        <mxPoint x="10" y="-11" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="29" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="21" target="27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=19;" vertex="1" connectable="0" parent="29">
+                    <mxGeometry x="-0.2588" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="21" value="&lt;span style=&quot;font-size: 19px&quot;&gt;是否跟踪依赖&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="245" y="790" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="24" target="27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="&lt;font style=&quot;font-size: 22px&quot;&gt;track&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="200" y="910" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="返回访问值" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;" vertex="1" parent="1">
+                    <mxGeometry x="295" y="1030" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.713;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=19;" edge="1" parent="1" source="31" target="33">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=19;" edge="1" parent="1" source="31" target="35">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=19;" vertex="1" connectable="0" parent="36">
+                    <mxGeometry x="-0.2232" relative="1" as="geometry">
+                        <mxPoint x="6" y="9" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="31" value="&lt;span style=&quot;font-size: 19px&quot;&gt;当前代理对象是否为只读对象&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="555" y="529" width="340" height="113" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="报错处理" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="690" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="35" target="42">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="获取设置结果" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="690" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="返回设置结果" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;" vertex="1" parent="1">
+                    <mxGeometry x="790" y="900" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=19;" edge="1" parent="1" source="42" target="40">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="&lt;font style=&quot;font-size: 22px&quot;&gt;trigger&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="800" y="790" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="ReactiveEffect" style="swimlane;fontSize=19;startSize=40;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="1190" width="630" height="1240" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;private fn: () =&amp;gt; void&lt;/p&gt;&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;private isActive: boolean&lt;/p&gt;&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;public scheduler?: () =&amp;gt; void&lt;/p&gt;&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;public onStop?: () =&amp;gt; void&lt;/p&gt;&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;public deps:&amp;nbsp;Set&amp;lt;Set&amp;lt;ReactiveEffect&amp;gt;&amp;gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;" vertex="1" parent="45">
+                    <mxGeometry x="30" y="60" width="260" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;" vertex="1" parent="45">
+                    <mxGeometry x="30" y="250" width="580" height="470" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="&lt;h1&gt;run&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="50" y="260" width="60" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="49" target="50">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="49" target="53">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="54">
+                    <mxGeometry x="-0.0106" y="1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="49" value="runner 是否被停止" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="190" y="290" width="230" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="直接返回 fn 运行结果" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="100" y="370" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="53" target="57">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="设置全局变量允许依赖被收集" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="355" y="370" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="57" target="59">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="设置全局变量表示当前 ReactiveEffect 对象正在被运行" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;" vertex="1" parent="45">
+                    <mxGeometry x="350" y="440" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="59" target="61">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="获取 fn 执行结果" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="360" y="520" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="61" target="63">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="重置全局变量禁止依赖被收集" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="355" y="590" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="返回 fn 执行结果" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="360" y="660" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="&lt;p style=&quot;line-height: 1 ; font-size: 14px&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;" vertex="1" parent="45">
+                    <mxGeometry x="25" y="740" width="585" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="&lt;h1&gt;stop&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="45" y="750" width="75" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="runner 是否被停止" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="190" y="770" width="230" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" target="74">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="305" y="820" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="74" value="退出函数" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="100" y="850" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" target="78">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="305" y="820" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="77" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="76">
+                    <mxGeometry x="-0.0106" y="1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="80" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="78" target="79">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="遍历 deps 依次删除本&lt;br&gt;ReactiveEffect" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="355" y="850" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="79" target="81">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="设置 isActive 表示本&lt;br&gt;ReactiveEffect 被停止" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="355" y="930" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=14;" edge="1" parent="45" source="81" target="83">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="84">
+                    <mxGeometry x="0.0237" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="87" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="81" target="86">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="87">
+                    <mxGeometry x="-0.1135" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="81" value="是否传入 onStop" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="315" y="1010" width="230" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" style="edgeStyle=none;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="45" source="83" target="86">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="83" value="执行 onStop" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="245" y="1090" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="退出函数" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="45">
+                    <mxGeometry x="410" y="1170" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="116" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=0;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="45" source="111">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="890" y="900" as="sourcePoint"/>
+                        <mxPoint x="610" y="820" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="720" y="830"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="65" value="" style="curved=1;endArrow=classic;html=1;fontSize=14;exitX=0.004;exitY=0.123;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="47" target="24">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="40" y="1490" as="sourcePoint"/>
+                        <mxPoint x="30" y="1250" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="40" y="1440"/>
+                            <mxPoint x="60" y="1020"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" value="运行时可能会触发 fn 内部的&lt;br&gt;Reactive 对象的 Get&lt;br&gt;从而导致依赖收集" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="65">
+                    <mxGeometry x="0.3058" y="-14" relative="1" as="geometry">
+                        <mxPoint x="21" y="14" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="91" value="" style="swimlane;startSize=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="990" y="1330" width="350" height="370" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="91" source="92" target="94">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="&lt;font style=&quot;font-size: 18px&quot;&gt;创建 ReactiveEffect 对象&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="91">
+                    <mxGeometry x="40" y="30" width="265" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="91" source="94" target="96">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="&lt;span style=&quot;font-size: 18px&quot;&gt;包装 ReactiveEffect 对象的 run&lt;br&gt;( 在 run 方法上挂载本 ReactiveEffect 对象 )&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="91">
+                    <mxGeometry x="40" y="150" width="265" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="&lt;span style=&quot;font-size: 18px&quot;&gt;返回包装过的 run&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="91">
+                    <mxGeometry x="40" y="270" width="265" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" style="edgeStyle=none;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.032;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=18;" edge="1" parent="1" source="92" target="45">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="1" source="108" target="109">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="&lt;font style=&quot;font-size: 22px&quot;&gt;stop&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="1754" width="170" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="" style="swimlane;startSize=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="990" y="1884" width="350" height="136" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="&lt;font style=&quot;font-size: 18px&quot;&gt;执行挂载在 runner 上的&lt;br&gt;ReactiveEffect 上的 stop&lt;br&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="109">
+                    <mxGeometry x="40" y="30" width="265" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="111" target="94">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1370" y="1820" as="sourcePoint"/>
+                        <mxPoint x="1420" y="1770" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1390" y="1830"/>
+                            <mxPoint x="1400" y="1570"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="117" value="" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="860" y="40" width="770" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="&lt;h1&gt;TargetMap&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="70" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="Reactive 中被代理的对象" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="990" y="120" width="270" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="" style="ellipse;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="911" y="170" width="660" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="&lt;h1&gt;KeyMap&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="1030" y="192" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="保存不同被代理对象的 key" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="1000" y="250" width="300" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="" style="ellipse;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="990" y="300" width="520" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="&lt;h1&gt;ActiveEffectSet&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="1050" y="310" width="305" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="保存相关的 activeEffect 对象" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="1035" y="360" width="300" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="126" value="" style="swimlane;startSize=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="1060" y="520" width="460" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="127" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="126" source="128" target="133">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="172.5" y="150" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="128" value="&lt;font style=&quot;font-size: 18px&quot;&gt;通过 TargetMap 获取对应的 ActiveEffectSet&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="126">
+                    <mxGeometry x="30" y="30" width="400" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="126" source="130">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="172.5" y="270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="136" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="126" source="133" target="135">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="133" value="&lt;font style=&quot;font-size: 18px&quot;&gt;遍历 ActiveEffectSet&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="126">
+                    <mxGeometry x="30" y="150" width="400" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="138" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.794;entryY=0.025;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=18;" edge="1" parent="126" source="135" target="137">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="139" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=18;" vertex="1" connectable="0" parent="138">
+                    <mxGeometry x="0.0712" y="4" relative="1" as="geometry">
+                        <mxPoint x="-3" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="141" value="否" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="126" source="135" target="140">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="135" value="&lt;span style=&quot;font-size: 19px&quot;&gt;activeEffect 是否有 scheduler&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="126">
+                    <mxGeometry x="60" y="260" width="340" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="137" value="&lt;font style=&quot;font-size: 18px&quot;&gt;执行 scheulder&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="126">
+                    <mxGeometry x="40" y="390" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="140" value="&lt;font style=&quot;font-size: 18px&quot;&gt;执行 run&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="126">
+                    <mxGeometry x="240" y="390" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="132" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.007;entryY=0.126;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="42" target="126">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="990" y="830" as="sourcePoint"/>
+                        <mxPoint x="1040" y="780" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="980" y="810"/>
+                            <mxPoint x="1000" y="600"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="142" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="128" target="117">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1570" y="550" as="sourcePoint"/>
+                        <mxPoint x="1620" y="500" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1550" y="550"/>
+                            <mxPoint x="1560" y="460"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="143" value="" style="swimlane;startSize=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="1760" y="700" width="450" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="146" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="143">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="172.5" y="270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="158" value="否" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="143" source="156" target="157">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" value="是" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="143" source="156" target="159">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="156" value="&lt;span style=&quot;font-size: 19px&quot;&gt;通过全局变量判断是否需要收集依赖&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="143">
+                    <mxGeometry x="20" y="30" width="430" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" value="&lt;font style=&quot;font-size: 18px&quot;&gt;退出函数&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="143">
+                    <mxGeometry x="80" y="160" width="110" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="164" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=18;" edge="1" parent="143" source="159" target="163">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="159" value="&lt;span style=&quot;font-size: 18px&quot;&gt;通过 TargetMap 找到 ActiveEffectSet&lt;br&gt;增加当前全局变量 activeEffect&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="143">
+                    <mxGeometry x="35" y="250" width="400" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="163" value="&lt;span style=&quot;font-size: 18px&quot;&gt;给 activeEffect 挂载 ActiveEffectSet&lt;br&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="143">
+                    <mxGeometry x="35" y="370" width="400" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="155" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="24" target="143">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="710" y="1080" as="sourcePoint"/>
+                        <mxPoint x="1540" y="1070" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1020" y="1090"/>
+                            <mxPoint x="1640" y="1020"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="162" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="159" target="57">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1500" y="1250" as="sourcePoint"/>
+                        <mxPoint x="1130" y="1150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1310" y="1090"/>
+                            <mxPoint x="930" y="1180"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="165" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="111" target="163">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1570" y="1810" as="sourcePoint"/>
+                        <mxPoint x="1620" y="1760" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1470" y="1930"/>
+                            <mxPoint x="1690" y="1100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="166" value="" style="curved=1;endArrow=classic;html=1;fontSize=18;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="159" target="117">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2290" y="940" as="sourcePoint"/>
+                        <mxPoint x="2340" y="890" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="2330" y="800"/>
+                            <mxPoint x="2040" y="330"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
