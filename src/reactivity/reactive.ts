@@ -42,3 +42,8 @@ export function isShallowReadonly(
 ) {
   return !!target[ReactiveFlags.IS_SHALLOW_READONLY as any]
 }
+
+//* isProxy
+export function isProxy(target: Record<keyof any, unknown> | unknown[]) {
+  return isReactive(target) || isReadonly(target)
+}
