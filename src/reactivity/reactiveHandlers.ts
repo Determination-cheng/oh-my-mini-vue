@@ -12,7 +12,12 @@ export const readonlyHandler = {
   set: createSetter(true),
 }
 
-function createGetter(isReadonly = false) {
+export const shallowReadonlyHandler = {
+  get: createGetter(true, true),
+  set: createSetter(true),
+}
+
+function createGetter(isReadonly = false, isShallowReadonly = false) {
   return function get(
     target: Record<string, unknown>,
     key: string | symbol,
@@ -22,8 +27,12 @@ function createGetter(isReadonly = false) {
     if (key === ReactiveFlags.IS_READONLY) return isReadonly
 
     // 正常 GET
-    let res = Reflect.get(target, key)
+    const res = Reflect.get(target, key)
 
+    // 如果是 shallowReadonly，既不需要深层次递归使内部各对象响应式，也不需要收集依赖
+    if (isShallowReadonly) return res
+
+    // 如果访问的属性是对象，则递归内部对象使其成为响应式
     if (isObject(res)) return isReadonly ? readonly(res) : reactive(res)
 
     // 普通的 reactive 会收集依赖
