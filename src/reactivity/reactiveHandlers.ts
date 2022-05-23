@@ -25,6 +25,7 @@ function createGetter(isReadonly = false, isShallowReadonly = false) {
     // 用于判断是否为 Reactive
     if (key === ReactiveFlags.IS_REACTIVE) return !isReadonly
     if (key === ReactiveFlags.IS_READONLY) return isReadonly
+    if (key === ReactiveFlags.IS_SHALLOW_READONLY) return isShallowReadonly
 
     // 正常 GET
     const res = Reflect.get(target, key)

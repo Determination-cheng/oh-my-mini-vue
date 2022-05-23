@@ -7,6 +7,7 @@ import {
 export const enum ReactiveFlags {
   IS_REACTIVE = '__v__IS_REACTIVE',
   IS_READONLY = '__v__IS_READONLY',
+  IS_SHALLOW_READONLY = '__v__IS_SHALLOW_READONLY',
 }
 
 //* reactive
@@ -34,4 +35,10 @@ export function isReadonly(target: Record<keyof any, unknown> | unknown[]) {
 //* shallowReactive
 export function shallowReadonly<T extends Record<string, unknown>>(target: T) {
   return new Proxy(target, shallowReadonlyHandler) as T
+}
+
+export function isShallowReadonly(
+  target: Record<keyof any, unknown> | unknown[],
+) {
+  return !!target[ReactiveFlags.IS_SHALLOW_READONLY as any]
 }
