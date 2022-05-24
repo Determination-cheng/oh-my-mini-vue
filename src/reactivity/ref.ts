@@ -6,6 +6,7 @@ class Ref<T> {
   private _value: T
   private _rawValue: T // 如果传入对象会被转换成 Proxy，但进行对比时我们希望使用原始值
   private deps: Set<ReactiveEffect> = new Set()
+  public readonly __v_IS_REF = true
   constructor(_value: T) {
     this._value = isObject(_value) ? reactive(_value) : _value
     this._rawValue = _value
@@ -30,4 +31,12 @@ class Ref<T> {
 
 export function ref<T>(target: T) {
   return new Ref(target)
+}
+
+export function isRef(target: any) {
+  return !!target.__v_IS_REF
+}
+
+export function unref(target: unknown) {
+  return isRef(target) ? (target as Ref<unknown>).value : target
 }
