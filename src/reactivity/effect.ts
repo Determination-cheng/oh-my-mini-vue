@@ -6,7 +6,7 @@ type Runner = {
   (): void
 }
 
-class ReactiveEffect {
+export class ReactiveEffect {
   private isActive = true
   public deps: Set<Set<ReactiveEffect>> = new Set()
   constructor(
@@ -59,6 +59,15 @@ type TargetMap = Map<
 >
 const targetMap: TargetMap = new Map()
 
+export function trackEffect(dep: Set<ReactiveEffect>) {
+  // 从对象的角度出发，收集相关的 effect
+  dep.add(activeEffect)
+
+  // 如果只是单纯的 reactive 并没有 effect，此时 activeEffect 是 undefined
+  // 因此这里需要做一下判断
+  activeEffect?.deps.add(dep)
+}
+
 export function track<T extends Record<string, any>>(
   target: T,
   key: string | symbol,
@@ -80,17 +89,11 @@ export function track<T extends Record<string, any>>(
     depsMap.set(key, dep)
   }
 
-  // 从对象的角度出发，收集相关的 effect
-  dep.add(activeEffect)
-
-  // 如果只是单纯的 reactive 并没有 effect，此时 activeEffect 是 undefined
-  // 因此这里需要做一下判断
-  activeEffect?.deps.add(dep)
+  trackEffect(dep)
 }
 
 //* 触发依赖
-export function trigger(target: Record<string, unknown>, key: string | symbol) {
-  const dep = targetMap.get(target)!.get(key)!
+export function runEffect(dep: Set<ReactiveEffect>) {
   dep.forEach(e => {
     if (e.scheduler) {
       e.scheduler()
@@ -98,6 +101,11 @@ export function trigger(target: Record<string, unknown>, key: string | symbol) {
       e.run()
     }
   })
+}
+
+export function trigger(target: Record<string, unknown>, key: string | symbol) {
+  const dep = targetMap.get(target)!.get(key)!
+  runEffect(dep)
 }
 
 //* 停止跟踪依赖
