@@ -1,4 +1,4 @@
-import { ref, isRef, unref } from '../ref'
+import { ref, isRef, unref, proxyRefs } from '../ref'
 import { effect } from '../effect'
 import { reactive } from '../reactive'
 
@@ -57,5 +57,27 @@ describe('ref', () => {
 
     expect(unref(a)).toBe(1)
     expect(unref(1)).toBe(1)
+  })
+
+  it('proxyRefs', () => {
+    const user = {
+      age: ref(10),
+      name: 'hh',
+    }
+    const proxyUser = proxyRefs(user)
+
+    // get
+    expect(user.age.value).toBe(10)
+    expect(proxyUser.age).toBe(10)
+    expect(proxyUser.name).toBe('hh')
+
+    // set
+    proxyUser.age = 20 as any // 通过 any 强行改变原来的数据类型
+    expect(proxyUser.age).toBe(20)
+    expect(user.age.value).toBe(20)
+
+    proxyUser.age = ref(10)
+    expect(proxyUser.age).toBe(10)
+    expect(user.age.value).toBe(10)
   })
 })

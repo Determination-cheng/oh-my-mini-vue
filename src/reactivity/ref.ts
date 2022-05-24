@@ -40,3 +40,17 @@ export function isRef(target: any) {
 export function unref(target: unknown) {
   return isRef(target) ? (target as Ref<unknown>).value : target
 }
+
+export function proxyRefs<T extends Record<keyof any, unknown>>(target: T) {
+  return new Proxy(target, {
+    get(target, key) {
+      return unref(Reflect.get(target, key))
+    },
+    set(target, key, value) {
+      if (isRef(target[key]) && !isRef(value)) {
+        return ((target[key] as Ref<unknown>).value = value)
+      }
+      return Reflect.set(target, key, value)
+    },
+  })
+}
