@@ -1,16 +1,16 @@
-let activeEffect: ReactiveEffect
+let activeEffect: ReactiveEffect<unknown>
 let shouldTrack = false
 
 type Runner = {
-  effect: ReactiveEffect
+  effect: ReactiveEffect<unknown>
   (): void
 }
 
-export class ReactiveEffect {
+export class ReactiveEffect<T> {
   private isActive = true
-  public deps: Set<Set<ReactiveEffect>> = new Set()
+  public deps: Set<Set<ReactiveEffect<unknown>>> = new Set()
   constructor(
-    private fn: () => void,
+    private fn: () => T,
     public scheduler?: () => void,
     public onStop?: () => void,
   ) {}
@@ -43,7 +43,7 @@ type EffectOptions = {
   scheduler?: () => void
   onStop?: () => void
 }
-export function effect(fn: () => void, options?: EffectOptions) {
+export function effect(fn: <T>() => T, options?: EffectOptions) {
   const _effect = new ReactiveEffect(fn, options?.scheduler, options?.onStop)
   _effect.run()
 
@@ -55,11 +55,11 @@ export function effect(fn: () => void, options?: EffectOptions) {
 //* 依赖收集
 type TargetMap = Map<
   Record<string, any>,
-  Map<string | symbol, Set<ReactiveEffect>>
+  Map<string | symbol, Set<ReactiveEffect<unknown>>>
 >
 const targetMap: TargetMap = new Map()
 
-export function trackEffect(dep: Set<ReactiveEffect>) {
+export function trackEffect(dep: Set<ReactiveEffect<unknown>>) {
   // 从对象的角度出发，收集相关的 effect
   dep.add(activeEffect)
 
@@ -93,7 +93,7 @@ export function track<T extends Record<string, any>>(
 }
 
 //* 触发依赖
-export function runEffect(dep: Set<ReactiveEffect>) {
+export function runEffect(dep: Set<ReactiveEffect<unknown>>) {
   dep.forEach(e => {
     if (e.scheduler) {
       e.scheduler()
