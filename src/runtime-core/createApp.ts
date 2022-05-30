@@ -10,7 +10,7 @@ export function createApp(rootComponent: VnodeType['type']) {
 
       const _rootContainer =
         typeof rootContainer === 'string'
-          ? (document.getElementById(rootContainer) as HTMLDivElement)
+          ? (document.querySelector(rootContainer) as HTMLDivElement)
           : rootContainer
 
       render(vnode, _rootContainer)

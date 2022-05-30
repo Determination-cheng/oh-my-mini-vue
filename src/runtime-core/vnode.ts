@@ -1,12 +1,14 @@
 export type SetupResult = (() => any) | Record<keyof any, any>
 
+export type ComponentType = {
+  setup(): SetupResult
+  render?: () => VnodeType
+}
+
 export type VnodeType = {
-  type: {
-    setup(): SetupResult
-    render?: () => VnodeType
-  }
-  props?: Record<string, unknown>
-  children?: VnodeType[]
+  type: ComponentType | string
+  props?: Record<string, any>
+  children?: VnodeType[] | string
 }
 
 export function createVNode(

@@ -1,4 +1,4 @@
-import type { VnodeType } from './vnode'
+import type { ComponentType, VnodeType } from './vnode'
 
 // export type ComponentInstance = ReturnType<typeof createComponentInstance>
 export type ComponentInstance = {
@@ -27,7 +27,7 @@ export function setupComponent(instance: ComponentInstance) {
 function setupStatefulComponent(instance: ComponentInstance) {
   const Component = instance.vnode.type
 
-  const { setup } = Component
+  const { setup } = Component as ComponentType
   if (typeof setup === 'function') {
     const setupResult = setup() as (() => any) | Record<keyof any, any>
 
@@ -47,7 +47,7 @@ function handleSetupResult(
 }
 
 function finishComponentSetup(instance: ComponentInstance) {
-  const Component = instance.type
+  const Component = instance.type as ComponentType
 
   if (Component.render) {
     instance.render = Component.render

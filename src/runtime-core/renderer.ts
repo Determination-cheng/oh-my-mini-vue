@@ -1,30 +1,59 @@
 import { createComponentInstance, setupComponent } from './component'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
+import { isObject } from '../utils'
 
-export function render(vnode: VnodeType, container: HTMLDivElement) {
+export function render(vnode: VnodeType, container: HTMLElement) {
   // patch
   patch(vnode, container)
 }
 
-function patch(vnode: VnodeType, container: HTMLDivElement) {
-  // 处理 vue 组件
-  processComponent(vnode, container)
-
-  // 处理原生元素
-  // processElement
+function patch(vnode: VnodeType, container: HTMLElement) {
+  if (typeof vnode.type === 'string') {
+    // 处理原生元素
+    processElement(vnode, container)
+  } else if (isObject(vnode.type)) {
+    // 处理 vue 组件
+    processComponent(vnode, container)
+  }
 }
 
 //* 处理原生元素
-function processElement() {}
+function processElement(vnode: VnodeType, container: HTMLElement) {
+  mountElement(vnode, container)
+}
+
+function mountElement(vnode: VnodeType, container: HTMLElement) {
+  const el = document.createElement(vnode.type as string)
+
+  // 设置子节点
+  // string array
+  const { children } = vnode
+  if (typeof children === 'string') {
+    el.textContent = children as string
+  } else if (Array.isArray(children)) {
+    children.forEach(child => patch(child, el))
+  }
+
+  // 设置属性 props
+  const { props } = vnode
+  for (const key in props) {
+    if (Object.prototype.hasOwnProperty.call(props, key)) {
+      const val = props[key]
+      el.setAttribute(key, val)
+    }
+  }
+
+  container.append(el)
+}
 
 //* 处理 vue 组件
-function processComponent(vnode: VnodeType, container: HTMLDivElement) {
+function processComponent(vnode: VnodeType, container: HTMLElement) {
   // 挂载组件
   mountComponent(vnode, container)
 }
 
-function mountComponent(vnode: VnodeType, container: HTMLDivElement) {
+function mountComponent(vnode: VnodeType, container: HTMLElement) {
   const instance = createComponentInstance(vnode)
 
   setupComponent(instance)
@@ -34,7 +63,7 @@ function mountComponent(vnode: VnodeType, container: HTMLDivElement) {
 
 function setupRenderEffect(
   instance: ComponentInstance,
-  container: HTMLDivElement,
+  container: HTMLElement,
 ) {
   // vnode tree
   const subtree = instance.render!()
