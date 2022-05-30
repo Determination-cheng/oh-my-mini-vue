@@ -8,13 +8,22 @@ export function render(vnode: VnodeType, container: HTMLDivElement) {
 }
 
 function patch(vnode: VnodeType, container: HTMLDivElement) {
-  // 处理组件
+  // 处理 vue 组件
   processComponent(vnode, container)
+
+  // 处理原生元素
+  // processElement
 }
+
+//* 处理原生元素
+function processElement() {}
+
+//* 处理 vue 组件
 function processComponent(vnode: VnodeType, container: HTMLDivElement) {
   // 挂载组件
   mountComponent(vnode, container)
 }
+
 function mountComponent(vnode: VnodeType, container: HTMLDivElement) {
   const instance = createComponentInstance(vnode)
 
