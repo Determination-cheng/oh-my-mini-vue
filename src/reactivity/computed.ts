@@ -3,7 +3,7 @@ import { ReactiveEffect } from './effect'
 class Computed<T> {
   private dirty = true
   private state: T | undefined = undefined
-  private readonly effect: ReactiveEffect<T>
+  private readonly effect: ReactiveEffect
   constructor(private getter: () => T) {
     this.effect = new ReactiveEffect(getter, () => {
       this.dirty = true
