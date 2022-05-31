@@ -24,7 +24,7 @@ function processElement(vnode: VnodeType, container: HTMLElement) {
 }
 
 function mountElement(vnode: VnodeType, container: HTMLElement) {
-  const el = document.createElement(vnode.type as string)
+  const el = (vnode.el = document.createElement(vnode.type as string))
 
   // 设置子节点
   // string array
@@ -58,11 +58,12 @@ function mountComponent(vnode: VnodeType, container: HTMLElement) {
 
   setupComponent(instance)
 
-  setupRenderEffect(instance, container)
+  setupRenderEffect(instance, vnode, container)
 }
 
 function setupRenderEffect(
   instance: ComponentInstance,
+  vnode: VnodeType,
   container: HTMLElement,
 ) {
   const { proxy } = instance
@@ -72,4 +73,6 @@ function setupRenderEffect(
   // 根据 subtree 再调用 patch
   // vnode -> element -> mountElement
   patch(subtree, container)
+
+  vnode.el = subtree.el
 }

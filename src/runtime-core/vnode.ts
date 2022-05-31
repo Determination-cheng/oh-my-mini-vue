@@ -9,6 +9,7 @@ export type VnodeType = {
   type: ComponentType | string
   props?: Record<string, any>
   children?: VnodeType[] | string
+  el: HTMLElement | null
 }
 
 export function createVNode(
@@ -16,6 +17,6 @@ export function createVNode(
   props?: VnodeType['props'],
   children?: VnodeType['children'],
 ): VnodeType {
-  const vnode = { type, props, children }
+  const vnode = { type, props, children, el: null }
   return vnode
 }
