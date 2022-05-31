@@ -65,8 +65,9 @@ function setupRenderEffect(
   instance: ComponentInstance,
   container: HTMLElement,
 ) {
+  const { proxy } = instance
   // vnode tree
-  const subtree = instance.render!()
+  const subtree = instance.render!.call(proxy)
 
   // 根据 subtree 再调用 patch
   // vnode -> element -> mountElement
