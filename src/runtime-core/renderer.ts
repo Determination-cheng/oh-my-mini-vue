@@ -1,7 +1,7 @@
 import { createComponentInstance, setupComponent } from './component'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
-import { isObject } from '../utils'
+import { ShapeFlags } from '../utils'
 
 export function render(vnode: VnodeType, container: HTMLElement) {
   // patch
@@ -9,10 +9,10 @@ export function render(vnode: VnodeType, container: HTMLElement) {
 }
 
 function patch(vnode: VnodeType, container: HTMLElement) {
-  if (typeof vnode.type === 'string') {
+  if (vnode.shapeFlag & ShapeFlags.ELEMENT) {
     // 处理原生元素
     processElement(vnode, container)
-  } else if (isObject(vnode.type)) {
+  } else if (vnode.shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
     // 处理 vue 组件
     processComponent(vnode, container)
   }
@@ -29,10 +29,10 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
   // 设置子节点
   // string array
   const { children } = vnode
-  if (typeof children === 'string') {
+  if (vnode.shapeFlag & ShapeFlags.TEXT_CHILDREN) {
     el.textContent = children as string
-  } else if (Array.isArray(children)) {
-    children.forEach(child => patch(child, el))
+  } else if (vnode.shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
+    ;(children as VnodeType[]).forEach(child => patch(child, el))
   }
 
   // 设置属性 props
