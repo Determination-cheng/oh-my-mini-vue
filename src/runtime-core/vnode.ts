@@ -32,7 +32,7 @@ export function createVNode(
   if (typeof children === 'string') {
     vnode.shapeFlag |= ShapeFlags.TEXT_CHILDREN
   } else if (Array.isArray(children)) {
-    vnode.shapeFlag |= ShapeFlags.STATEFUL_COMPONENT
+    vnode.shapeFlag |= ShapeFlags.ARRAY_CHILDREN
   }
 
   return vnode
