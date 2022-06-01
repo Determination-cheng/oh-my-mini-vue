@@ -3,7 +3,7 @@ import { ShapeFlags } from '../utils'
 export type SetupResult = (() => any) | Record<keyof any, any>
 
 export type ComponentType = {
-  setup(): SetupResult
+  setup(props: Record<string, any>): SetupResult
   render?: () => VnodeType
 }
 

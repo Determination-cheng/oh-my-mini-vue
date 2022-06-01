@@ -37,7 +37,6 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
 
   // 设置属性 props
   const { props } = vnode
-  console.log('props', props)
   for (const key in props) {
     if (Object.prototype.hasOwnProperty.call(props, key)) {
       const val = props[key]

@@ -1,3 +1,4 @@
+import { initProps } from './componentProps'
 import { publicInstanceProxyHandlers } from './componentPublicInstance'
 import type { ComponentType, VnodeType } from './vnode'
 
@@ -7,6 +8,7 @@ export type ComponentInstance = {
   setupState: Record<keyof any, any>
   type: VnodeType['type']
   render?: () => VnodeType
+  props: Record<string, any>
 }
 
 export function createComponentInstance(vnode: VnodeType) {
@@ -15,6 +17,7 @@ export function createComponentInstance(vnode: VnodeType) {
     setupState: {},
     type: vnode.type,
     proxy: new Proxy({} as any, {}),
+    props: vnode.props ?? {},
   }
 
   return component
@@ -22,7 +25,7 @@ export function createComponentInstance(vnode: VnodeType) {
 
 export function setupComponent(instance: ComponentInstance) {
   // 1.初始化 props
-  // initProps()
+  initProps(instance, instance.vnode.props)
 
   // 2.初始化 slots
   // initSlots()
@@ -42,7 +45,9 @@ function setupStatefulComponent(instance: ComponentInstance) {
 
   const { setup } = Component as ComponentType
   if (typeof setup === 'function') {
-    const setupResult = setup() as (() => any) | Record<keyof any, any>
+    const setupResult = setup(instance.props) as
+      | (() => any)
+      | Record<keyof any, any>
 
     handleSetupResult(instance, setupResult)
   }
