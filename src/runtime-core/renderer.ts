@@ -1,7 +1,7 @@
 import { createComponentInstance, setupComponent } from './component'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
-import { ShapeFlags } from '../utils'
+import { ShapeFlags, isEvent } from '../utils'
 
 export function render(vnode: VnodeType, container: HTMLElement) {
   // patch
@@ -37,10 +37,17 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
 
   // 设置属性 props
   const { props } = vnode
+  console.log('props', props)
   for (const key in props) {
     if (Object.prototype.hasOwnProperty.call(props, key)) {
       const val = props[key]
-      el.setAttribute(key, val)
+
+      if (isEvent(key)) {
+        const event = key.slice(2).toLocaleLowerCase()
+        el.addEventListener(event, val)
+      } else {
+        el.setAttribute(key, val)
+      }
     }
   }
 
