@@ -1,9 +1,13 @@
 import { ShapeFlags } from '../utils'
+import type { EmitType } from './componentEmit'
 
 export type SetupResult = (() => any) | Record<keyof any, any>
 
 export type ComponentType = {
-  setup(props: Record<string, any>): SetupResult
+  setup(
+    props: Record<string, any>,
+    tools: { emit: (event: string) => void },
+  ): SetupResult
   render?: () => VnodeType
 }
 

@@ -1,5 +1,6 @@
 import { initProps } from './componentProps'
 import { publicInstanceProxyHandlers } from './componentPublicInstance'
+import { emit } from './componentEmit'
 import type { ComponentType, VnodeType } from './vnode'
 
 export type ComponentInstance = {
@@ -9,6 +10,7 @@ export type ComponentInstance = {
   type: VnodeType['type']
   render?: () => VnodeType
   props: Record<string, any>
+  emit: (event: string) => void
 }
 
 export function createComponentInstance(vnode: VnodeType) {
@@ -18,7 +20,10 @@ export function createComponentInstance(vnode: VnodeType) {
     type: vnode.type,
     proxy: new Proxy({} as any, {}),
     props: vnode.props ?? {},
+    emit: () => {},
   }
+
+  component.emit = emit.bind(null, component)
 
   return component
 }
@@ -45,9 +50,9 @@ function setupStatefulComponent(instance: ComponentInstance) {
 
   const { setup } = Component as ComponentType
   if (typeof setup === 'function') {
-    const setupResult = setup(instance.props) as
-      | (() => any)
-      | Record<keyof any, any>
+    const setupResult = setup(instance.props, {
+      emit: instance.emit,
+    }) as (() => any) | Record<keyof any, any>
 
     handleSetupResult(instance, setupResult)
   }
