@@ -3,6 +3,7 @@ import type { ComponentInstance } from './component'
 
 const getterMap = {
   $el: (i: ComponentInstance) => i.vnode.el,
+  $slots: (i: ComponentInstance) => i.slots,
 }
 
 export const publicInstanceProxyHandlers = {

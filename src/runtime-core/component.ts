@@ -1,6 +1,7 @@
 import { initProps } from './componentProps'
 import { publicInstanceProxyHandlers } from './componentPublicInstance'
 import { emit } from './componentEmit'
+import { initSlots } from './componentSlots'
 import type { ComponentType, VnodeType } from './vnode'
 
 export type ComponentInstance = {
@@ -11,6 +12,7 @@ export type ComponentInstance = {
   render?: () => VnodeType
   props: Record<string, any>
   emit: (event: string) => void
+  slots: VnodeType[]
 }
 
 export function createComponentInstance(vnode: VnodeType) {
@@ -21,6 +23,7 @@ export function createComponentInstance(vnode: VnodeType) {
     proxy: new Proxy({} as any, {}),
     props: vnode.props ?? {},
     emit: () => {},
+    slots: [],
   }
 
   component.emit = emit.bind(null, component)
@@ -33,7 +36,10 @@ export function setupComponent(instance: ComponentInstance) {
   initProps(instance, instance.vnode.props)
 
   // 2.初始化 slots
-  // initSlots()
+  initSlots(
+    instance,
+    instance.vnode.children as VnodeType | VnodeType[] | Record<string, any>,
+  )
 
   // 3.初始化有状态组件 ( 区别于函数组件 )
   setupStatefulComponent(instance)

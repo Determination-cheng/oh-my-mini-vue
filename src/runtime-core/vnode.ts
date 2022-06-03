@@ -1,5 +1,4 @@
 import { ShapeFlags } from '../utils'
-import type { EmitType } from './componentEmit'
 
 export type SetupResult = (() => any) | Record<keyof any, any>
 
@@ -14,7 +13,7 @@ export type ComponentType = {
 export type VnodeType = {
   type: ComponentType | string
   props?: Record<string, any>
-  children?: VnodeType[] | string
+  children?: VnodeType[] | string | Record<string, any>
   el: HTMLElement | null
   shapeFlag: number
 }
