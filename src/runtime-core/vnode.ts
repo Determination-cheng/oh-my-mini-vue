@@ -14,11 +14,12 @@ export type VnodeType = {
   type: ComponentType | string | Symbol
   props?: Record<string, any>
   children?: VnodeType[] | string | Record<string, any>
-  el: HTMLElement | null
+  el: HTMLElement | Text | null
   shapeFlag: number
 }
 
 export const Fragment = Symbol('Fragment')
+export const Text = Symbol('Text')
 
 export function createVNode(
   type: VnodeType['type'],
@@ -41,6 +42,10 @@ export function createVNode(
   }
 
   return vnode
+}
+
+export function createTextVnode(text: string) {
+  return createVNode(Text, {}, text)
 }
 
 function getShapeFlag(type: VnodeType['type']) {

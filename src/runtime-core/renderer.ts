@@ -1,6 +1,6 @@
 import { createComponentInstance, setupComponent } from './component'
 import { ShapeFlags, isEvent } from '../utils'
-import { Fragment } from './vnode'
+import { Fragment, Text } from './vnode'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
 
@@ -16,6 +16,9 @@ function patch(vnode: VnodeType, container: HTMLElement) {
     case Fragment:
       processFragment(vnode, container)
       break
+    case Text:
+      processText(vnode, container)
+      break
     default:
       if (shapeFlag & ShapeFlags.ELEMENT) {
         // 处理原生元素
@@ -30,6 +33,13 @@ function patch(vnode: VnodeType, container: HTMLElement) {
 //* Fragment
 function processFragment(vnode: VnodeType, container: HTMLElement) {
   mountChildren(vnode.children as VnodeType[], container)
+}
+
+//* Text
+function processText(vnode: VnodeType, container: HTMLElement) {
+  const { children } = vnode
+  const textNode = (vnode.el = document.createTextNode(children as string))
+  container.append(textNode)
 }
 
 //* 处理原生元素
