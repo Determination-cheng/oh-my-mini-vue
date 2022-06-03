@@ -1,7 +1,8 @@
 import { createComponentInstance, setupComponent } from './component'
+import { ShapeFlags, isEvent } from '../utils'
+import { Fragment } from './vnode'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
-import { ShapeFlags, isEvent } from '../utils'
 
 export function render(vnode: VnodeType, container: HTMLElement) {
   // patch
@@ -9,13 +10,26 @@ export function render(vnode: VnodeType, container: HTMLElement) {
 }
 
 function patch(vnode: VnodeType, container: HTMLElement) {
-  if (vnode.shapeFlag & ShapeFlags.ELEMENT) {
-    // 处理原生元素
-    processElement(vnode, container)
-  } else if (vnode.shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
-    // 处理 vue 组件
-    processComponent(vnode, container)
+  const { shapeFlag, type } = vnode
+
+  switch (type) {
+    case Fragment:
+      processFragment(vnode, container)
+      break
+    default:
+      if (shapeFlag & ShapeFlags.ELEMENT) {
+        // 处理原生元素
+        processElement(vnode, container)
+      } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
+        // 处理 vue 组件
+        processComponent(vnode, container)
+      }
   }
+}
+
+//* Fragment
+function processFragment(vnode: VnodeType, container: HTMLElement) {
+  mountChildren(vnode.children as VnodeType[], container)
 }
 
 //* 处理原生元素
@@ -32,7 +46,8 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
   if (vnode.shapeFlag & ShapeFlags.TEXT_CHILDREN) {
     el.textContent = children as string
   } else if (vnode.shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
-    ;(children as VnodeType[]).forEach(child => patch(child, el))
+    // ;(children as VnodeType[]).forEach(child => patch(child, el))
+    mountChildren(vnode.children as VnodeType[], el)
   }
 
   // 设置属性 props
@@ -51,6 +66,10 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
   }
 
   container.append(el)
+}
+
+function mountChildren(children: VnodeType[], container: HTMLElement) {
+  children.forEach(child => patch(child, container))
 }
 
 //* 处理 vue 组件

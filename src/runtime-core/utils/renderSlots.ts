@@ -1,4 +1,4 @@
-import { createVNode } from '../vnode'
+import { createVNode, Fragment } from '../vnode'
 import type { ComponentInstance } from '../component'
 
 export function renderSlots(
@@ -6,7 +6,7 @@ export function renderSlots(
   name: string,
 ) {
   // const slot = (slots as Record<string, any>)[name]
-
   // if (slot) return createVNode('div', {}, slot)
-  return createVNode('div', {}, slots)
+
+  return createVNode(Fragment, {}, slots)
 }

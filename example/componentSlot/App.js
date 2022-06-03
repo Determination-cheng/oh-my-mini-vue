@@ -7,8 +7,8 @@ export const App = {
   render() {
     // const app = h('div', {}, 'App')
     // 这里第三个参数就是要插槽要渲染的东西
-    const foo = h(Foo, {}, h('p', {}, '123'))
-    // const foo = h(Foo, {}, [h('p', {}, '123'), h('p', {}, '456')])
+    // const foo = h(Foo, {}, h('p', {}, '123'))
+    const foo = h(Foo, {}, [h('p', {}, '123'), h('p', {}, '456')])
     // const foo = h(
     //   Foo,
     //   {},
