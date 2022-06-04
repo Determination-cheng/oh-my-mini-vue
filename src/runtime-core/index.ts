@@ -1,6 +1,7 @@
-export { createApp } from './createApp'
+// export { createApp } from './createApp'
 export { h } from './h'
 export { renderSlots } from './utils/renderSlots'
 export { createTextVnode } from './vnode'
 export { getComponentInstance } from './component'
 export { provide, inject } from './apiInject'
+export { createRenderer } from './renderer'
