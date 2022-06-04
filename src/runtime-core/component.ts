@@ -15,6 +15,8 @@ export type ComponentInstance = {
   slots: VnodeType[]
 }
 
+let componentInstance: ComponentInstance | null = null
+
 export function createComponentInstance(vnode: VnodeType) {
   const component: ComponentInstance = {
     vnode,
@@ -56,11 +58,14 @@ function setupStatefulComponent(instance: ComponentInstance) {
 
   const { setup } = Component as ComponentType
   if (typeof setup === 'function') {
+    setComponentInstance(instance)
     const setupResult = setup(instance.props, {
       emit: instance.emit,
     }) as (() => any) | Record<keyof any, any>
 
     handleSetupResult(instance, setupResult)
+
+    setComponentInstance(null)
   }
 }
 
@@ -81,4 +86,12 @@ function finishComponentSetup(instance: ComponentInstance) {
   if (Component.render) {
     instance.render = Component.render
   }
+}
+
+function setComponentInstance(instance: ComponentInstance | null) {
+  componentInstance = instance
+}
+
+export function getComponentInstance() {
+  return componentInstance
 }
