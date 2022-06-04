@@ -11,19 +11,26 @@ export type ComponentInstance = {
   type: VnodeType['type']
   render?: () => VnodeType
   props: Record<string, any>
+  provides: Record<string, any>
+  parent: ComponentInstance | null
   emit: (event: string) => void
   slots: VnodeType[]
 }
 
 let componentInstance: ComponentInstance | null = null
 
-export function createComponentInstance(vnode: VnodeType) {
+export function createComponentInstance(
+  vnode: VnodeType,
+  parent: ComponentInstance | null,
+) {
   const component: ComponentInstance = {
     vnode,
     setupState: {},
     type: vnode.type,
     proxy: new Proxy({} as any, {}),
     props: vnode.props ?? {},
+    provides: parent?.provides ?? {},
+    parent,
     emit: () => {},
     slots: [],
   }

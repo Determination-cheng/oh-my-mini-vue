@@ -6,15 +6,19 @@ import type { ComponentInstance } from './component'
 
 export function render(vnode: VnodeType, container: HTMLElement) {
   // patch
-  patch(vnode, container)
+  patch(vnode, container, null)
 }
 
-function patch(vnode: VnodeType, container: HTMLElement) {
+function patch(
+  vnode: VnodeType,
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
   const { shapeFlag, type } = vnode
 
   switch (type) {
     case Fragment:
-      processFragment(vnode, container)
+      processFragment(vnode, container, parent)
       break
     case Text:
       processText(vnode, container)
@@ -22,17 +26,21 @@ function patch(vnode: VnodeType, container: HTMLElement) {
     default:
       if (shapeFlag & ShapeFlags.ELEMENT) {
         // 处理原生元素
-        processElement(vnode, container)
+        processElement(vnode, container, parent)
       } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
         // 处理 vue 组件
-        processComponent(vnode, container)
+        processComponent(vnode, container, parent)
       }
   }
 }
 
 //* Fragment
-function processFragment(vnode: VnodeType, container: HTMLElement) {
-  mountChildren(vnode.children as VnodeType[], container)
+function processFragment(
+  vnode: VnodeType,
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
+  mountChildren(vnode.children as VnodeType[], container, parent)
 }
 
 //* Text
@@ -43,11 +51,19 @@ function processText(vnode: VnodeType, container: HTMLElement) {
 }
 
 //* 处理原生元素
-function processElement(vnode: VnodeType, container: HTMLElement) {
-  mountElement(vnode, container)
+function processElement(
+  vnode: VnodeType,
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
+  mountElement(vnode, container, parent)
 }
 
-function mountElement(vnode: VnodeType, container: HTMLElement) {
+function mountElement(
+  vnode: VnodeType,
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
   const el = (vnode.el = document.createElement(vnode.type as string))
 
   // 设置子节点
@@ -56,8 +72,7 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
   if (vnode.shapeFlag & ShapeFlags.TEXT_CHILDREN) {
     el.textContent = children as string
   } else if (vnode.shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
-    // ;(children as VnodeType[]).forEach(child => patch(child, el))
-    mountChildren(vnode.children as VnodeType[], el)
+    mountChildren(vnode.children as VnodeType[], el, parent)
   }
 
   // 设置属性 props
@@ -78,18 +93,30 @@ function mountElement(vnode: VnodeType, container: HTMLElement) {
   container.append(el)
 }
 
-function mountChildren(children: VnodeType[], container: HTMLElement) {
-  children.forEach(child => patch(child, container))
+function mountChildren(
+  children: VnodeType[],
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
+  children.forEach(child => patch(child, container, parent))
 }
 
 //* 处理 vue 组件
-function processComponent(vnode: VnodeType, container: HTMLElement) {
+function processComponent(
+  vnode: VnodeType,
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
   // 挂载组件
-  mountComponent(vnode, container)
+  mountComponent(vnode, container, parent)
 }
 
-function mountComponent(vnode: VnodeType, container: HTMLElement) {
-  const instance = createComponentInstance(vnode)
+function mountComponent(
+  vnode: VnodeType,
+  container: HTMLElement,
+  parent: ComponentInstance | null,
+) {
+  const instance = createComponentInstance(vnode, parent)
 
   setupComponent(instance)
 
@@ -107,7 +134,7 @@ function setupRenderEffect(
 
   // 根据 subtree 再调用 patch
   // vnode -> element -> mountElement
-  patch(subtree, container)
+  patch(subtree, container, instance)
 
   vnode.el = subtree.el
 }
