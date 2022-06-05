@@ -6,12 +6,16 @@ function createElement(type: VnodeType['type']) {
   return document.createElement(type as string)
 }
 
-function patchProps(el: any, key: string, val: any) {
+function patchProps(el: any, key: string, prevProp: any, newProp: any) {
   if (isEvent(key)) {
     const event = key.slice(2).toLocaleLowerCase()
-    el.addEventListener(event, val)
+    el.addEventListener(event, newProp)
   } else {
-    el.setAttribute(key, val)
+    if (newProp === undefined || newProp === null) {
+      el.removeAttribute(key)
+    } else {
+      el.setAttribute(key, newProp)
+    }
   }
 }
 

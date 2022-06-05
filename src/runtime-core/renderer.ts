@@ -1,6 +1,6 @@
 import { createComponentInstance, setupComponent } from './component'
 import { createAppAPI } from './createApp'
-import { ShapeFlags } from '../utils'
+import { EMPTY_OBJECT, ShapeFlags } from '../utils'
 import { Fragment, Text } from './vnode'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
@@ -8,12 +8,16 @@ import { effect } from '../reactivity'
 
 type RendererOptions = {
   createElement(type: VnodeType['type']): HTMLElement | any
-  patchProps(el: any, key: string, val: any): void
+  patchProps(el: any, key: string, prevProp: any, nextProp: any): void
   insert(el: any, container: any): void
 }
 
 export function createRenderer(options: RendererOptions) {
-  const { createElement, patchProps, insert } = options
+  const {
+    createElement: hostCreateElement,
+    patchProps: hostPatchProps,
+    insert: hostInsert,
+  } = options
 
   function render(vnode: VnodeType, container: HTMLElement) {
     // patch
@@ -80,14 +84,46 @@ export function createRenderer(options: RendererOptions) {
       return
     }
 
+    // 更新
     patchElement(n1, n2, container)
   }
 
   function patchElement(n1: VnodeType, n2: VnodeType, container: HTMLElement) {
     console.log('n1', n1)
     console.log('n2', n2)
+    const el = (n2.el = n1.el)
 
-    // todo: deal with props
+    // 更新参数
+    const oldProps = n1.props ?? EMPTY_OBJECT
+    const newProps = n2.props ?? EMPTY_OBJECT
+    patchProps(el, oldProps, newProps)
+  }
+
+  function patchProps(
+    el: VnodeType['el'],
+    oldProps: Record<string, any>,
+    newProps: Record<string, any>,
+  ) {
+    if (oldProps === newProps) return
+    //* 1.之前的值和现在的值不一样 —— 修改属性
+    //* 2.新值为 undefined 或 null —— 删除
+    //* 3.新属性无 —— 删除属性
+    for (const key in newProps) {
+      const prevProp = oldProps[key]
+      const nextProp = newProps[key]
+
+      if (prevProp !== nextProp) {
+        hostPatchProps(el, key, prevProp, nextProp)
+      }
+    }
+
+    if (oldProps !== EMPTY_OBJECT) {
+      for (const key in oldProps) {
+        if (!newProps.hasOwnProperty(key)) {
+          hostPatchProps(el, key, oldProps[key], null)
+        }
+      }
+    }
   }
 
   function mountElement(
@@ -96,7 +132,8 @@ export function createRenderer(options: RendererOptions) {
     parent: ComponentInstance | null,
   ) {
     //* 创建元素
-    const el = createElement(vnode.type)
+    const el = hostCreateElement(vnode.type)
+    vnode.el = el
 
     // 设置子节点
     // string array
@@ -110,16 +147,13 @@ export function createRenderer(options: RendererOptions) {
     // 设置属性 props
     const { props } = vnode
     for (const key in props) {
-      if (Object.prototype.hasOwnProperty.call(props, key)) {
-        const val = props[key]
-
-        //* 处理属性
-        patchProps(el, key, val)
-      }
+      const val = props[key]
+      //* 处理属性
+      hostPatchProps(el, key, null, val)
     }
 
     //* 将当前元素添加到容器上
-    insert(el, container)
+    hostInsert(el, container)
   }
 
   function mountChildren(
