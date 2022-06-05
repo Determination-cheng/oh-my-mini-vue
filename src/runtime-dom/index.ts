@@ -23,10 +23,21 @@ function insert(el: any, container: any) {
   container.append(el)
 }
 
+function remove(child: any) {
+  const parent = child.parentNode
+  if (parent) parent.removeChild(child)
+}
+
+function setElementText(el: any, text: string) {
+  el.textContent = text
+}
+
 const renderer = createRenderer({
   createElement,
   patchProps,
   insert,
+  remove,
+  setElementText,
 })
 
 export function createApp(rootComponent: VnodeType['type']) {

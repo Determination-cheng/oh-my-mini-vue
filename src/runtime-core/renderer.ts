@@ -10,6 +10,8 @@ type RendererOptions = {
   createElement(type: VnodeType['type']): HTMLElement | any
   patchProps(el: any, key: string, prevProp: any, nextProp: any): void
   insert(el: any, container: any): void
+  remove(el: any): void
+  setElementText(el: any, text: string): void
 }
 
 export function createRenderer(options: RendererOptions) {
@@ -17,6 +19,8 @@ export function createRenderer(options: RendererOptions) {
     createElement: hostCreateElement,
     patchProps: hostPatchProps,
     insert: hostInsert,
+    remove: hostRemove,
+    setElementText: hostSetElementText,
   } = options
 
   function render(vnode: VnodeType, container: HTMLElement) {
@@ -85,18 +89,70 @@ export function createRenderer(options: RendererOptions) {
     }
 
     // 更新
-    patchElement(n1, n2, container)
+    patchElement(n1, n2, container, parent as ComponentInstance)
   }
 
-  function patchElement(n1: VnodeType, n2: VnodeType, container: HTMLElement) {
+  function patchElement(
+    n1: VnodeType,
+    n2: VnodeType,
+    container: HTMLElement,
+    parentComponent: ComponentInstance,
+  ) {
     console.log('n1', n1)
     console.log('n2', n2)
     const el = (n2.el = n1.el)
+
+    // 更新子节点
+    patchChildren(n1, n2, el, parentComponent)
 
     // 更新参数
     const oldProps = n1.props ?? EMPTY_OBJECT
     const newProps = n2.props ?? EMPTY_OBJECT
     patchProps(el, oldProps, newProps)
+  }
+
+  function patchChildren(
+    n1: VnodeType,
+    n2: VnodeType,
+    container: HTMLElement | Text | null,
+    parentComponent: ComponentInstance,
+  ) {
+    const prevShapeFlag = n1.shapeFlag
+    const shapeFlag = n2.shapeFlag
+    const c1 = n1.children
+    const c2 = n2.children
+
+    if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
+      //* ? -> text
+      if (prevShapeFlag & ShapeFlags.ARRAY_CHILDREN) {
+        // 清空旧 children
+        unmountChildren(n1.children as VnodeType[])
+      }
+
+      if (c1 !== c2) {
+        // 设置 text
+        hostSetElementText(container, c2 as any)
+      }
+    } else {
+      //* ? -> array
+      if (prevShapeFlag & ShapeFlags.TEXT_CHILDREN) {
+        hostSetElementText(container, '')
+        mountChildren(
+          c2 as VnodeType[],
+          container as HTMLElement,
+          parentComponent,
+        )
+      }
+    }
+  }
+
+  function unmountChildren(children: VnodeType[]) {
+    for (let i = 0; i < children.length; i++) {
+      const el = children[i].el
+
+      // remove
+      hostRemove(el)
+    }
   }
 
   function patchProps(
