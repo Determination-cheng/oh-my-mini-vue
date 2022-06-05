@@ -3,8 +3,10 @@ import { publicInstanceProxyHandlers } from './componentPublicInstance'
 import { emit } from './componentEmit'
 import { initSlots } from './componentSlots'
 import type { ComponentType, VnodeType } from './vnode'
+import { proxyRefs } from '../reactivity'
 
 export type ComponentInstance = {
+  isMounted: boolean
   proxy: typeof Proxy
   vnode: VnodeType
   setupState: Record<keyof any, any>
@@ -15,6 +17,7 @@ export type ComponentInstance = {
   parent: ComponentInstance | null
   emit: (event: string) => void
   slots: VnodeType[]
+  subtree: VnodeType
 }
 
 let componentInstance: ComponentInstance | null = null
@@ -33,6 +36,8 @@ export function createComponentInstance(
     parent,
     emit: () => {},
     slots: [],
+    isMounted: false,
+    subtree: {} as any,
   }
 
   component.emit = emit.bind(null, component)
@@ -81,7 +86,7 @@ function handleSetupResult(
   setupResult: (() => any) | Record<keyof any, any>,
 ) {
   if (typeof setupResult === 'object') {
-    instance.setupState = setupResult
+    instance.setupState = proxyRefs(setupResult)
   }
 
   finishComponentSetup(instance)
