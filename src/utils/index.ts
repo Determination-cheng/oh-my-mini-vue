@@ -1,3 +1,5 @@
+import { VnodeType } from '../runtime-core/vnode'
+
 export { isObject } from './isObject'
 export { ShapeFlags } from './ShapeFlags'
 
@@ -23,4 +25,8 @@ export function camelize(s: string) {
   return s.replace(/-(\w)/g, (_, c) => {
     return c ? c.toUpperCase() : ''
   })
+}
+
+export function isSameVnode(n1: VnodeType, n2: VnodeType) {
+  return n1.type === n2.type && n1.key === n2.key
 }

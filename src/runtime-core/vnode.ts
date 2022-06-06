@@ -16,6 +16,7 @@ export type VnodeType = {
   children?: VnodeType[] | string | Record<string, any>
   el: HTMLElement | Text | null
   shapeFlag: number
+  key: string | undefined
 }
 
 export const Fragment = Symbol('Fragment')
@@ -32,6 +33,7 @@ export function createVNode(
     children,
     el: null,
     shapeFlag: getShapeFlag(type),
+    key: props?.key,
   }
 
   // children
