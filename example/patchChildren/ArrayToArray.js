@@ -31,8 +31,8 @@ import { h, ref } from '../../lib/guide-mini-vue.esm.js'
 //   h('p', { key: 'C' }, 'C'),
 // ]
 
-//* 创建
-// 左侧
+//* 3.创建
+// 3.1 左侧
 // (a b)
 // (a b) c
 // i = 2, e1 = 1, e2 = 2
@@ -44,20 +44,20 @@ import { h, ref } from '../../lib/guide-mini-vue.esm.js'
 //   h('p', { key: 'D' }, 'D'),
 // ]
 
-// 右侧
+// 3.2 右侧
 // (a b)
 // c (a b)
 // i = 0, e1 = -1, e2 = 0
-const prevChildren = [h('p', { key: 'A' }, 'A'), h('p', { key: 'B' }, 'B')]
-const nextChildren = [
-  // h('p', { key: 'D' }, 'D'),
-  h('p', { key: 'C' }, 'C'),
-  h('p', { key: 'A' }, 'A'),
-  h('p', { key: 'B' }, 'B'),
-]
+// const prevChildren = [h('p', { key: 'A' }, 'A'), h('p', { key: 'B' }, 'B')]
+// const nextChildren = [
+// // h('p', { key: 'D' }, 'D'),
+//   h('p', { key: 'C' }, 'C'),
+//   h('p', { key: 'A' }, 'A'),
+//   h('p', { key: 'B' }, 'B'),
+// ]
 
-//* 删除
-// 左侧
+//* 4.删除
+// 4.1 左侧
 // (a b) c
 // (a b)
 // i = 2, e1 = 2, e2 = 1
@@ -68,7 +68,7 @@ const nextChildren = [
 // ]
 // const nextChildren = [h('p', { key: 'A' }, 'A'), h('p', { key: 'B' }, 'B')]
 
-// 右侧
+// 4.2 右侧
 // a (b c)
 // (b c)
 // i = 0, e1 = 0, e2 = -1
@@ -78,6 +78,48 @@ const nextChildren = [
 //   h('p', { key: 'C' }, 'C'),
 // ]
 // const nextChildren = [h('p', { key: 'B' }, 'B'), h('p', { key: 'C' }, 'C')]
+
+//* 5. 中间乱序部分删除
+// 5.1
+// a b (c d) f g
+// a b (e c) f g
+// const prevChildren = [
+//   h('p', { key: 'A' }, 'A'),
+//   h('p', { key: 'B' }, 'B'),
+//   h('p', { key: 'C', id: 'c-prev' }, 'C'),
+//   h('p', { key: 'D' }, 'D'),
+//   h('p', { key: 'F' }, 'F'),
+//   h('p', { key: 'G' }, 'G'),
+// ]
+// const nextChildren = [
+//   h('p', { key: 'A' }, 'A'),
+//   h('p', { key: 'B' }, 'B'),
+//   h('p', { key: 'E' }, 'E'),
+//   h('p', { key: 'C', id: 'c-next' }, 'C'),
+//   h('p', { key: 'F' }, 'F'),
+//   h('p', { key: 'G' }, 'G'),
+// ]
+
+// 5.2
+// a b (c d) f g
+// a b (e c) f g
+const prevChildren = [
+  h('p', { key: 'A' }, 'A'),
+  h('p', { key: 'B' }, 'B'),
+  h('p', { key: 'C', id: 'c-prev' }, 'C'),
+  h('p', { key: 'E' }, 'E'),
+  h('p', { key: 'D' }, 'D'),
+  h('p', { key: 'F' }, 'F'),
+  h('p', { key: 'G' }, 'G'),
+]
+const nextChildren = [
+  h('p', { key: 'A' }, 'A'),
+  h('p', { key: 'B' }, 'B'),
+  h('p', { key: 'E' }, 'E'),
+  h('p', { key: 'C', id: 'c-next' }, 'C'),
+  h('p', { key: 'F' }, 'F'),
+  h('p', { key: 'G' }, 'G'),
+]
 
 export default {
   name: 'ArrayToArray',
