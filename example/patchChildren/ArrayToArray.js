@@ -79,7 +79,7 @@ import { h, ref } from '../../lib/guide-mini-vue.esm.js'
 // ]
 // const nextChildren = [h('p', { key: 'B' }, 'B'), h('p', { key: 'C' }, 'C')]
 
-//* 5. 中间乱序部分删除
+//* 5.中间乱序部分删除
 // 5.1
 // a b (c d) f g
 // a b (e c) f g
@@ -103,12 +103,34 @@ import { h, ref } from '../../lib/guide-mini-vue.esm.js'
 // 5.2
 // a b (c d) f g
 // a b (e c) f g
+// const prevChildren = [
+//   h('p', { key: 'A' }, 'A'),
+//   h('p', { key: 'B' }, 'B'),
+//   h('p', { key: 'C', id: 'c-prev' }, 'C'),
+//   h('p', { key: 'E' }, 'E'),
+//   h('p', { key: 'D' }, 'D'),
+//   h('p', { key: 'F' }, 'F'),
+//   h('p', { key: 'G' }, 'G'),
+// ]
+// const nextChildren = [
+//   h('p', { key: 'A' }, 'A'),
+//   h('p', { key: 'B' }, 'B'),
+//   h('p', { key: 'E' }, 'E'),
+//   h('p', { key: 'C', id: 'c-next' }, 'C'),
+//   h('p', { key: 'F' }, 'F'),
+//   h('p', { key: 'G' }, 'G'),
+// ]
+
+//* 6.移动
+// 6.1
+// a b (c d e) f g
+// a b (e c d) f g
 const prevChildren = [
   h('p', { key: 'A' }, 'A'),
   h('p', { key: 'B' }, 'B'),
-  h('p', { key: 'C', id: 'c-prev' }, 'C'),
-  h('p', { key: 'E' }, 'E'),
+  h('p', { key: 'C' }, 'C'),
   h('p', { key: 'D' }, 'D'),
+  h('p', { key: 'E' }, 'E'),
   h('p', { key: 'F' }, 'F'),
   h('p', { key: 'G' }, 'G'),
 ]
@@ -116,7 +138,8 @@ const nextChildren = [
   h('p', { key: 'A' }, 'A'),
   h('p', { key: 'B' }, 'B'),
   h('p', { key: 'E' }, 'E'),
-  h('p', { key: 'C', id: 'c-next' }, 'C'),
+  h('p', { key: 'C' }, 'C'),
+  h('p', { key: 'D' }, 'D'),
   h('p', { key: 'F' }, 'F'),
   h('p', { key: 'G' }, 'G'),
 ]

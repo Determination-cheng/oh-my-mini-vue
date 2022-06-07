@@ -2,6 +2,7 @@ import { VnodeType } from '../runtime-core/vnode'
 
 export { isObject } from './isObject'
 export { ShapeFlags } from './ShapeFlags'
+export { getSequence } from './getSequence'
 
 export const EMPTY_OBJECT = {}
 

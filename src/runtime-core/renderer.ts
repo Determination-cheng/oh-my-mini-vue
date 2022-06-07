@@ -1,6 +1,6 @@
 import { createComponentInstance, setupComponent } from './component'
 import { createAppAPI } from './createApp'
-import { EMPTY_OBJECT, isSameVnode, ShapeFlags } from '../utils'
+import { EMPTY_OBJECT, getSequence, isSameVnode, ShapeFlags } from '../utils'
 import { Fragment, Text } from './vnode'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
@@ -229,6 +229,11 @@ export function createRenderer(options: RendererOptions) {
 
       // 新元素的坐标映射
       const newIndexMap = new Map()
+      // 处理需要移动元素的数据结构
+      const newIndexToOldIndexMap = Array.from(new Array(toBePatched), _ => 0)
+
+      let hasMoved = false
+      let currentMaxNewIndex = 0
 
       // 遍历新数组中间乱序部分，获取新元素的坐标映射
       for (let i = s2; i <= e2; i++) {
@@ -262,8 +267,36 @@ export function createRenderer(options: RendererOptions) {
         if (newIndex === undefined) {
           hostRemove(prevChild.el)
         } else {
+          if (newIndex >= currentMaxNewIndex) {
+            currentMaxNewIndex = newIndex
+          } else {
+            hasMoved = true
+          }
+
+          // 如果是 0 则认为没有建立映射关系，意味着原来的不存在
+          newIndexToOldIndexMap[newIndex - s2] = i + 1
           patch(prevChild, c2[newIndex], container, parentComponent, null)
           hasPatched++
+        }
+      }
+
+      const increasingNewIndexSequence = hasMoved
+        ? getSequence(newIndexToOldIndexMap)
+        : []
+
+      let j = increasingNewIndexSequence.length - 1
+      for (let i = toBePatched - 1; i >= 0; i--) {
+        const nextIndex = i + s2
+        const nextChild = c2[nextIndex]
+        const anchor = nextIndex + 1 < l2 ? c2[nextIndex + 1].el : null
+
+        if (hasMoved) {
+          if (j < 0 || i !== increasingNewIndexSequence[j]) {
+            // 移动位置
+            hostInsert(nextChild.el, container, anchor)
+          } else {
+            j--
+          }
         }
       }
     }
