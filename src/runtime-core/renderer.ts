@@ -290,6 +290,10 @@ export function createRenderer(options: RendererOptions) {
         const nextChild = c2[nextIndex]
         const anchor = nextIndex + 1 < l2 ? c2[nextIndex + 1].el : null
 
+        if (newIndexToOldIndexMap[i] === 0) {
+          patch(null, nextChild, container, parentComponent, anchor)
+        }
+
         if (hasMoved) {
           if (j < 0 || i !== increasingNewIndexSequence[j]) {
             // 移动位置
