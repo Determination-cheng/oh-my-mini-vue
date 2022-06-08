@@ -1,4 +1,5 @@
 import { ShapeFlags } from '../utils'
+import { ComponentInstance } from './component'
 
 export type SetupResult = (() => any) | Record<keyof any, any>
 
@@ -17,6 +18,7 @@ export type VnodeType = {
   el: HTMLElement | Text | null
   shapeFlag: number
   key: string | undefined
+  component: ComponentInstance | null
 }
 
 export const Fragment = Symbol('Fragment')
@@ -34,6 +36,7 @@ export function createVNode(
     el: null,
     shapeFlag: getShapeFlag(type),
     key: props?.key,
+    component: null,
   }
 
   // children

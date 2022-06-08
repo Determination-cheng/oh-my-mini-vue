@@ -5,6 +5,7 @@ import { Fragment, Text } from './vnode'
 import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
 import { effect } from '../reactivity'
+import { shouldUpdateComponent } from './componentUpdateUtils'
 
 type RendererOptions = {
   createElement(type: VnodeType['type']): HTMLElement | any
@@ -390,8 +391,23 @@ export function createRenderer(options: RendererOptions) {
     parent: ComponentInstance | null,
     anchor: any | null,
   ) {
-    // 挂载组件
-    mountComponent(n2, container, parent, anchor)
+    if (!n1) {
+      // 挂载组件
+      mountComponent(n2, container, parent, anchor)
+    } else {
+      updateComponent(n1, n2)
+    }
+  }
+
+  function updateComponent(n1: VnodeType, n2: VnodeType) {
+    const instance = (n2.component = n1.component) as ComponentInstance
+    if (shouldUpdateComponent(n1, n2)) {
+      instance.next = n2
+      instance.update()
+    } else {
+      n2.el = n1.el
+      instance.vnode = n2
+    }
   }
 
   function mountComponent(
@@ -401,6 +417,7 @@ export function createRenderer(options: RendererOptions) {
     anchor: any | null,
   ) {
     const instance = createComponentInstance(vnode, parent)
+    vnode.component = instance
 
     setupComponent(instance)
 
@@ -413,7 +430,7 @@ export function createRenderer(options: RendererOptions) {
     container: HTMLElement,
     anchor: any | null,
   ) {
-    effect(() => {
+    instance.update = effect(() => {
       const { proxy } = instance
       //* 初始化
       if (!instance.isMounted) {
@@ -431,12 +448,28 @@ export function createRenderer(options: RendererOptions) {
 
       //* 更新
       console.log('update')
+      const { next, vnode: instanceVnode } = instance
+      if (next) {
+        next.el = vnode.el
+
+        updateComponentPrerender(instance, next)
+      }
+
       // vnode tree
       const subtree = instance.render!.call(proxy)
       const prevSubtree = instance.subtree
 
       patch(prevSubtree, subtree, container, instance, anchor)
     })
+  }
+
+  function updateComponentPrerender(
+    instance: ComponentInstance,
+    nextVnode: VnodeType,
+  ) {
+    instance.vnode = nextVnode
+    instance.next = null
+    instance.props = nextVnode.props!
   }
 
   return {
