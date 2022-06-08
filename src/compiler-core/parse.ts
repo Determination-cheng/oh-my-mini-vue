@@ -2,7 +2,8 @@ import { NodeTypes } from './ast'
 
 type ChildrenType = {
   type: number
-  content: {
+  tag?: string
+  content?: {
     type: number
     content: string
   }
@@ -18,11 +19,15 @@ export function baseParse(content: string) {
 function parseChildren(context: ContextType): ChildrenType[] {
   const nodes: ChildrenType[] = []
   let node: ChildrenType
+  const s = context.source
 
-  if (context.source.startsWith('{{')) {
+  if (s.startsWith('{{')) {
     node = parseInterpolation(context)
+  } else if (s.startsWith('<')) {
+    if (/[a-z]/i.test(s[1])) {
+      node = parseElement(context)
+    }
   }
-
   nodes.push(node!)
 
   return nodes
@@ -36,6 +41,7 @@ function createParserContext(content: string) {
   return { source: content }
 }
 
+//* 解析插值
 function parseInterpolation(context: ContextType) {
   // {{message}}
   const DelimiterStart = '{{'
@@ -50,6 +56,22 @@ function parseInterpolation(context: ContextType) {
       type: NodeTypes.SIMPLE_EXPRESS,
       content,
     },
+  }
+}
+
+//* 解析元素
+function parseElement(context: ContextType) {
+  // 解析 tag
+  const match = /^<\/?([a-z]+)/i.exec(context.source)
+  const tag = match?.[1]
+
+  // 删除处理完成的代码
+  advanceBy(context, '<', '>') // 删除开始标签
+  advanceBy(context, '<', '>') // 删除结束标签
+
+  return {
+    type: NodeTypes.ELEMENT,
+    tag,
   }
 }
 
