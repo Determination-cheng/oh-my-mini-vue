@@ -5,8 +5,10 @@ const queue: Set<JobType> = new Set()
 
 let isFlushPending = false
 
+const p = Promise.resolve()
+
 export function nextTick(fn: (value: void) => void | PromiseLike<void>) {
-  return fn ? Promise.resolve().then(fn) : Promise.resolve()
+  return fn ? p.then(fn) : p
 }
 
 export function queueJobs(job: JobType) {
