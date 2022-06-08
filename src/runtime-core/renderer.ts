@@ -6,6 +6,7 @@ import type { VnodeType } from './vnode'
 import type { ComponentInstance } from './component'
 import { effect } from '../reactivity'
 import { shouldUpdateComponent } from './componentUpdateUtils'
+import { queueJobs } from './scheduler'
 
 type RendererOptions = {
   createElement(type: VnodeType['type']): HTMLElement | any
@@ -430,37 +431,45 @@ export function createRenderer(options: RendererOptions) {
     container: HTMLElement,
     anchor: any | null,
   ) {
-    instance.update = effect(() => {
-      const { proxy } = instance
-      //* 初始化
-      if (!instance.isMounted) {
+    instance.update = effect(
+      () => {
+        const { proxy } = instance
+        //* 初始化
+        if (!instance.isMounted) {
+          // vnode tree
+          const subtree = (instance.subtree = instance.render!.call(proxy))
+
+          // 根据 subtree 再调用 patch
+          // vnode -> element -> mountElement
+          patch(null, subtree, container, instance, anchor)
+
+          vnode.el = subtree.el
+          instance.isMounted = true
+          return
+        }
+
+        //* 更新
+        console.log('update')
+        const { next, vnode: instanceVnode } = instance
+        if (next) {
+          next.el = vnode.el
+
+          updateComponentPrerender(instance, next)
+        }
+
         // vnode tree
-        const subtree = (instance.subtree = instance.render!.call(proxy))
+        const subtree = instance.render!.call(proxy)
+        const prevSubtree = instance.subtree
 
-        // 根据 subtree 再调用 patch
-        // vnode -> element -> mountElement
-        patch(null, subtree, container, instance, anchor)
-
-        vnode.el = subtree.el
-        instance.isMounted = true
-        return
-      }
-
-      //* 更新
-      console.log('update')
-      const { next, vnode: instanceVnode } = instance
-      if (next) {
-        next.el = vnode.el
-
-        updateComponentPrerender(instance, next)
-      }
-
-      // vnode tree
-      const subtree = instance.render!.call(proxy)
-      const prevSubtree = instance.subtree
-
-      patch(prevSubtree, subtree, container, instance, anchor)
-    })
+        patch(prevSubtree, subtree, container, instance, anchor)
+      },
+      {
+        scheduler() {
+          console.log('update scheduler')
+          queueJobs(instance.update)
+        },
+      },
+    )
   }
 
   function updateComponentPrerender(
