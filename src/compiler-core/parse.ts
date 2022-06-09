@@ -3,10 +3,12 @@ import { NodeTypes } from './ast'
 type ChildrenType = {
   type: number
   tag?: string
-  content?: {
-    type: number
-    content: string
-  }
+  content?:
+    | {
+        type: number
+        content: string
+      }
+    | string
 }
 
 type ContextType = ReturnType<typeof createParserContext>
@@ -18,7 +20,7 @@ export function baseParse(content: string) {
 
 function parseChildren(context: ContextType): ChildrenType[] {
   const nodes: ChildrenType[] = []
-  let node: ChildrenType
+  let node: ChildrenType | undefined
   const s = context.source
 
   if (s.startsWith('{{')) {
@@ -28,6 +30,11 @@ function parseChildren(context: ContextType): ChildrenType[] {
       node = parseElement(context)
     }
   }
+
+  if (!node) {
+    node = parseText(context)
+  }
+
   nodes.push(node!)
 
   return nodes
@@ -47,8 +54,7 @@ function parseInterpolation(context: ContextType) {
   const DelimiterStart = '{{'
   const DelimiterEnd = '}}'
 
-  const content = getContent(context, DelimiterStart, DelimiterEnd)
-  advanceBy(context, DelimiterStart, DelimiterEnd)
+  const content = parseContextByDelimiter(context, DelimiterStart, DelimiterEnd)
 
   return {
     type: NodeTypes.INTERPOLATION,
@@ -61,17 +67,21 @@ function parseInterpolation(context: ContextType) {
 
 //* 解析元素
 function parseElement(context: ContextType) {
-  // 解析 tag
-  const match = /^<\/?([a-z]+)/i.exec(context.source)
-  const tag = match?.[1]
-
-  // 删除处理完成的代码
-  advanceBy(context, '<', '>') // 删除开始标签
-  advanceBy(context, '<', '>') // 删除结束标签
+  const tag = parseTag(context)
 
   return {
     type: NodeTypes.ELEMENT,
     tag,
+  }
+}
+
+//* 解析文本
+function parseText(context: ContextType) {
+  const content = parseContextByLength(context)
+
+  return {
+    type: NodeTypes.TEXT,
+    content,
   }
 }
 
@@ -86,11 +96,48 @@ function getContent(
   return content
 }
 
-function advanceBy(
+function parseTag(context: ContextType) {
+  // 解析 tag
+  const match = /^<\/?([a-z]+)/i.exec(context.source)
+  const tag = match?.[1]
+
+  // 删除处理完成的代码
+  advanceByDelimiter(context, '<', '>') // 删除开始标签
+  advanceByDelimiter(context, '<', '>') // 删除结束标签
+
+  return tag
+}
+
+function parseContextByDelimiter(
+  context: ContextType,
+  DelimiterStart: string,
+  DelimiterEnd: string,
+) {
+  const content = getContent(context, DelimiterStart, DelimiterEnd)
+  advanceByDelimiter(context, DelimiterStart, DelimiterEnd)
+
+  return content
+}
+
+function parseContextByLength(context: ContextType) {
+  // 1.截取
+  const content = context.source.slice(0, context.source.length)
+
+  // 2.推进
+  advanceByLength(context, content.length)
+
+  return content
+}
+
+function advanceByDelimiter(
   context: ContextType,
   DelimiterStart: string,
   DelimiterEnd: string,
 ) {
   const closeIndex = context.source.indexOf(DelimiterEnd, DelimiterStart.length)
   context.source = context.source.slice(closeIndex + DelimiterEnd.length)
+}
+
+function advanceByLength(context: ContextType, length: number) {
+  context.source = context.source.slice(length)
 }
