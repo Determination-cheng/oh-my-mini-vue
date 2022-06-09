@@ -55,7 +55,10 @@ function parseChildren(
 function isEnd(context: ContextType, parentTag: string) {
   // 遇到结束标签时结束
   const s = context.source
-  if (s.startsWith(`</`)) return true
+  if (parentTag && s.startsWith(`</${parentTag}`)) {
+    context.source = context.source.replace(`</${parentTag}>`, '')
+    return true
+  }
 
   // 当没有值的时候结束
   return !context.source
