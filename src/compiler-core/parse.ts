@@ -11,33 +11,54 @@ type ChildrenType = {
     | string
 }
 
+type ElementType = {
+  type: number
+  tag: string
+  children?: ChildrenType[]
+}
+
 type ContextType = ReturnType<typeof createParserContext>
 
 export function baseParse(content: string) {
   const context = createParserContext(content)
-  return createRoot(parseChildren(context))
+  return createRoot(parseChildren(context, ''))
 }
 
-function parseChildren(context: ContextType): ChildrenType[] {
+function parseChildren(
+  context: ContextType,
+  parentTag: string,
+): ChildrenType[] {
   const nodes: ChildrenType[] = []
-  let node: ChildrenType | undefined
-  const s = context.source
 
-  if (s.startsWith('{{')) {
-    node = parseInterpolation(context)
-  } else if (s.startsWith('<')) {
-    if (/[a-z]/i.test(s[1])) {
-      node = parseElement(context)
+  while (!isEnd(context, parentTag)) {
+    let node: ChildrenType | undefined
+    const s = context.source
+
+    if (s.startsWith('{{')) {
+      node = parseInterpolation(context)
+    } else if (s.startsWith('<')) {
+      if (/[a-z]/i.test(s[1])) {
+        node = parseElement(context)
+      }
     }
-  }
 
-  if (!node) {
-    node = parseText(context)
-  }
+    if (!node) {
+      node = parseText(context)
+    }
 
-  nodes.push(node!)
+    nodes.push(node!)
+  }
 
   return nodes
+}
+
+function isEnd(context: ContextType, parentTag: string) {
+  // 遇到结束标签时结束
+  const s = context.source
+  if (s.startsWith(`</`)) return true
+
+  // 当没有值的时候结束
+  return !context.source
 }
 
 function createRoot(children: ChildrenType[]) {
@@ -67,17 +88,25 @@ function parseInterpolation(context: ContextType) {
 
 //* 解析元素
 function parseElement(context: ContextType) {
-  const tag = parseTag(context)
+  const element = parseTag(context) as ElementType
+  element.children = parseChildren(context, element.tag)
 
-  return {
-    type: NodeTypes.ELEMENT,
-    tag,
-  }
+  return element
 }
 
 //* 解析文本
 function parseText(context: ContextType) {
-  const content = parseContextByLength(context)
+  let endIndex = context.source.length
+  let endTokens = ['</', '{{']
+
+  endTokens.forEach(endToken => {
+    const index = context.source.indexOf(endToken)
+    if (index !== -1 && index < endIndex) {
+      endIndex = index
+    }
+  })
+
+  const content = parseContextByLength(context, endIndex)
 
   return {
     type: NodeTypes.TEXT,
@@ -96,16 +125,22 @@ function getContent(
   return content
 }
 
-function parseTag(context: ContextType) {
+function parseTag(context: ContextType, length?: number) {
   // 解析 tag
   const match = /^<\/?([a-z]+)/i.exec(context.source)
   const tag = match?.[1]
 
   // 删除处理完成的代码
   advanceByDelimiter(context, '<', '>') // 删除开始标签
-  advanceByDelimiter(context, '<', '>') // 删除结束标签
+  // advanceByDelimiter(context, '<', '>') // 删除结束标签
+  if (typeof length === 'number') {
+    advanceByDelimiter(context, '<', '>') // 删除结束标签
+  }
 
-  return tag
+  return {
+    type: NodeTypes.ELEMENT,
+    tag,
+  }
 }
 
 function parseContextByDelimiter(
@@ -119,9 +154,9 @@ function parseContextByDelimiter(
   return content
 }
 
-function parseContextByLength(context: ContextType) {
+function parseContextByLength(context: ContextType, length: number) {
   // 1.截取
-  const content = context.source.slice(0, context.source.length)
+  const content = context.source.slice(0, length)
 
   // 2.推进
   advanceByLength(context, content.length)
