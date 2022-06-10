@@ -32,5 +32,5 @@ function genNode(
   context: ReturnType<typeof createCodegenContext>,
 ) {
   const { push } = context
-  push(`return '${node?.content}'`)
+  push(`'${node?.content}'`)
 }
