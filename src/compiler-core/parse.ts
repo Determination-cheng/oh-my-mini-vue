@@ -1,6 +1,6 @@
 import { NodeTypes } from './ast'
 
-type ChildrenType = {
+export type ChildrenType = {
   type: number
   tag?: string
   content?:
@@ -9,6 +9,7 @@ type ChildrenType = {
         content: string
       }
     | string
+  children?: ChildrenType[]
 }
 
 type ElementType = {
