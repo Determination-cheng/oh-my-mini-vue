@@ -74,7 +74,7 @@ function isEnd(context: ContextType, parentTag: string) {
 }
 
 function createRoot(children: ChildrenType[]) {
-  return { children }
+  return { children, type: NodeTypes.ROOT }
 }
 
 function createParserContext(content: string) {
