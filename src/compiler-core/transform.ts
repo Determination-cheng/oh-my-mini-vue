@@ -1,15 +1,25 @@
 import type { ChildrenType } from './parse'
 
 export type NodeType =
-  | ChildrenType
-  | { children: ChildrenType[]; type?: number; content?: any }
+  | (ChildrenType & { codeGenNode?: any })
+  | {
+      children: ChildrenType[]
+      type?: number
+      content?: any
+      codeGenNode?: any
+    }
 
 type Options = { nodeTransforms?: Array<(node: NodeType) => void> }
 
 export function transform(root: NodeType, options?: Options) {
   const context = createTransformContext(root, options)
-
   traverseNode(root, context)
+
+  createRootCodeGen(root)
+}
+
+function createRootCodeGen(root: NodeType) {
+  return (root.codeGenNode = root.children?.[0])
 }
 
 function createTransformContext(root: NodeType, options?: Options) {
