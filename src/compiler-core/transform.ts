@@ -3,16 +3,21 @@ import type { ChildrenType } from './parse'
 import { TO_DISPLAY_STRING } from './runtimeHelpers'
 
 export type NodeType =
-  | (ChildrenType & { codeGenNode?: any; helpers?: any })
+  | (ChildrenType & { codeGenNode?: any; helpers?: any; tag?: string })
   | {
       children: ChildrenType[]
       type?: number
       content?: any
       codeGenNode?: any
       helpers?: any
+      tag?: string
     }
 
-type Options = { nodeTransforms?: Array<(node: NodeType) => void> }
+export type ContextType = ReturnType<typeof createTransformContext>
+
+type Options = {
+  nodeTransforms?: Array<(node: NodeType, context: ContextType) => void>
+}
 
 export function transform(root: NodeType, options?: Options) {
   const context = createTransformContext(root, options)
@@ -47,7 +52,7 @@ function traverseNode(
 
   for (let i = 0; i < nodeTransforms.length; i++) {
     const transform = nodeTransforms[i]
-    transform(node)
+    transform(node, context)
   }
 
   switch (node.type) {

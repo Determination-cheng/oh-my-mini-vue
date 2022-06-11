@@ -1,6 +1,7 @@
 import { generate } from '../codegen'
 import { baseParse } from '../parse'
 import { transform } from '../transform'
+import { transformElement } from '../transforms/transformElement'
 import { transformExpression } from '../transforms/transformExpression'
 
 describe('codegen', () => {
@@ -19,6 +20,14 @@ describe('codegen', () => {
   it('interpolation', () => {
     const ast = baseParse('{{message}}')
     transform(ast, { nodeTransforms: [transformExpression] })
+
+    const { code } = generate(ast)
+    expect(code).toMatchSnapshot()
+  })
+
+  it('element', () => {
+    const ast = baseParse('<div></div>')
+    transform(ast, { nodeTransforms: [transformElement] })
 
     const { code } = generate(ast)
     expect(code).toMatchSnapshot()
