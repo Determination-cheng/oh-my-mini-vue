@@ -9,6 +9,7 @@ export type ComponentType = {
     tools: { emit: (event: string) => void },
   ): SetupResult
   render?: () => VnodeType
+  template?: string
 }
 
 export type VnodeType = {
@@ -23,6 +24,7 @@ export type VnodeType = {
 
 export const Fragment = Symbol('Fragment')
 export const Text = Symbol('Text')
+export { createVNode as createElementVnode }
 
 export function createVNode(
   type: VnodeType['type'],

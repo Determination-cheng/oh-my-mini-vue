@@ -5,6 +5,7 @@ import { VnodeType } from '../runtime-core/vnode'
 export { isObject } from './isObject'
 export { ShapeFlags } from './ShapeFlags'
 export { getSequence } from './getSequence'
+export { toDisplayString } from './toDisplayString'
 
 export function isString(s: unknown): s is string {
   return typeof s === 'string'

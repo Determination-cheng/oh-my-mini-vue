@@ -12,7 +12,7 @@ export type ComponentInstance = {
   next: VnodeType | null
   setupState: Record<keyof any, any>
   type: VnodeType['type']
-  render?: () => VnodeType
+  render?: (ctx: any) => VnodeType
   props: Record<string, any>
   provides: Record<string, any>
   parent: ComponentInstance | null
@@ -99,9 +99,12 @@ function handleSetupResult(
 function finishComponentSetup(instance: ComponentInstance) {
   const Component = instance.type as ComponentType
 
-  if (Component.render) {
-    instance.render = Component.render
+  if (compiler && !Component.render) {
+    if (Component.template) {
+      Component.render = compiler(Component.template)
+    }
   }
+  instance.render = Component.render
 }
 
 function setComponentInstance(instance: ComponentInstance | null) {
@@ -110,4 +113,10 @@ function setComponentInstance(instance: ComponentInstance | null) {
 
 export function getComponentInstance() {
   return componentInstance
+}
+
+let compiler: any
+
+export function registerRuntimeCompiler(_compiler: any) {
+  compiler = _compiler
 }

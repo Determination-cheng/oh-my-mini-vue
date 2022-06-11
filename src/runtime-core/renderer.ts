@@ -437,7 +437,10 @@ export function createRenderer(options: RendererOptions) {
         //* 初始化
         if (!instance.isMounted) {
           // vnode tree
-          const subtree = (instance.subtree = instance.render!.call(proxy))
+          const subtree = (instance.subtree = instance.render!.call(
+            proxy,
+            proxy,
+          ))
 
           // 根据 subtree 再调用 patch
           // vnode -> element -> mountElement
@@ -458,7 +461,7 @@ export function createRenderer(options: RendererOptions) {
         }
 
         // vnode tree
-        const subtree = instance.render!.call(proxy)
+        const subtree = instance.render!.call(proxy, proxy)
         const prevSubtree = instance.subtree
 
         patch(prevSubtree, subtree, container, instance, anchor)
