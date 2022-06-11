@@ -1,9 +1,18 @@
+import { NodeTypes } from '../compiler-core/ast'
+import { NodeType } from '../compiler-core/transform'
 import { VnodeType } from '../runtime-core/vnode'
 
 export { isObject } from './isObject'
 export { ShapeFlags } from './ShapeFlags'
 export { getSequence } from './getSequence'
 
+export function isString(s: unknown): s is string {
+  return typeof s === 'string'
+}
+
+export function isText(node: NodeType) {
+  return node.type === NodeTypes.TEXT || node.type === NodeTypes.INTERPOLATION
+}
 export const EMPTY_OBJECT = {}
 
 export function isEvent(s: string) {

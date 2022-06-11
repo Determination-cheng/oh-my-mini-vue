@@ -3,7 +3,12 @@ import type { ChildrenType } from './parse'
 import { TO_DISPLAY_STRING } from './runtimeHelpers'
 
 export type NodeType =
-  | (ChildrenType & { codeGenNode?: any; helpers?: any; tag?: string })
+  | (ChildrenType & {
+      codeGenNode?: any
+      helpers?: any
+      tag?: string
+      props?: any
+    })
   | {
       children: ChildrenType[]
       type?: number
@@ -11,12 +16,13 @@ export type NodeType =
       codeGenNode?: any
       helpers?: any
       tag?: string
+      props?: any
     }
 
 export type ContextType = ReturnType<typeof createTransformContext>
 
 type Options = {
-  nodeTransforms?: Array<(node: NodeType, context: ContextType) => void>
+  nodeTransforms?: Array<(node: NodeType, context: ContextType) => any>
 }
 
 export function transform(root: NodeType, options?: Options) {
@@ -28,7 +34,12 @@ export function transform(root: NodeType, options?: Options) {
 }
 
 function createRootCodeGen(root: NodeType) {
-  return (root.codeGenNode = root.children?.[0])
+  const child: any = root.children?.[0]
+  if (child.type === NodeTypes.ELEMENT) {
+    root.codeGenNode = child.codeGenNode
+  } else {
+    root.codeGenNode = root.children?.[0]
+  }
 }
 
 function createTransformContext(root: NodeType, options?: Options) {
@@ -49,10 +60,12 @@ function traverseNode(
   context: ReturnType<typeof createTransformContext>,
 ) {
   const nodeTransforms = context.nodeTransforms
+  const exitFns = []
 
   for (let i = 0; i < nodeTransforms.length; i++) {
     const transform = nodeTransforms[i]
-    transform(node, context)
+    const onExit = transform(node, context)
+    if (onExit) exitFns.push(onExit)
   }
 
   switch (node.type) {
@@ -64,6 +77,8 @@ function traverseNode(
       traverseChildren(node, context)
       break
   }
+
+  exitFns.reverse().forEach(fn => fn())
 }
 
 function traverseChildren(
